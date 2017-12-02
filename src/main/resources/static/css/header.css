@@ -1,0 +1,32 @@
+.header{
+	background-color: silver;
+	 height: 60px;
+	 padding-top: 3px;
+}
+
+.headerdiv{
+	float: right;
+	padding-right:25px;
+	padding-top: 10px;
+}
+
+.headertext{
+	float: left;
+}
+
+.headerbutton{
+	
+	background:none!important;
+    border:none; 
+    padding:0!important;
+    
+    /*optional*/
+    font-family:arial,sans-serif; /*input has OS specific font-family*/
+    color:#069;
+    text-decoration:underline;
+    cursor:pointer;
+    font-size: 20px;
+    float: right;
+	padding-right:25px;
+	padding-top: 10px;
+}

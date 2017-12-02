@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Login Page</title>
+<link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wrap">
+                <p class="form-title"><h1>Sign In</h1></p>
+                <form class="login" action="/verifyUser" method="post">
+                <div>
+	                <input type="text" placeholder="Username" name="userName"/><br/>
+	                <input type="password" placeholder="Password" name="password"/><br/><br/>
+	                <input type="submit" value="Sign In"/><br/>
+				</div>              
+                </form>
+                <div class="signup-btn">
+	               Not signed up already ?
+	                <form class="signup" action="/signup" method="post">
+	                <div>
+		                <input type="submit" value="Sign Up"/>
+					</div>              
+	                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ </body>
+</html>

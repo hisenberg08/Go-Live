@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome Page</title>
+<link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="header">
+	<div class="headertext"><h1>Go Live!!</h1></div>
+	<div class="headerdiv">
+	<form action="/home" method="post">               
+		<input class="headerbutton" type="submit" value="Home"/>
+		<input type="hidden" name="hidden" th:value="${user}"/>
+	</form></div>
+	<div class="headerdivs">
+	<form action="/logout" method="post">               
+		<input class="headerbutton" type="submit" value="Logout"/>
+		<input type="hidden" name="hidden" th:value="${user}"/>
+	</form></div>
+</div>
+<div><h1><center>Dashboard</center></h1></div>
+<div class="dashboard">
+	<p class="welcomeuser" th:text="'Welcome '+${user}+'!!!'"></p>
+	<table style="width:100%" border="1" >
+	  <tr height="50">
+	    <th><form action="/playlist" method="post">               
+				<input class="dashbtn" type="submit" value="My Playlist"/>
+				<input type="hidden" name="hidden" th:value="${user}"/>
+			</form>
+		</th>
+		<th><form action="/playlist" method="post">               
+				<input class="dashbtn" type="submit" value="Create PlayList"/>
+				<input type="hidden" name="hidden" th:value="${user}"/>
+			</form>
+		</th>
+		<th><form action="/playlist" method="post">               
+				<input class="dashbtn" type="submit" value="Most Liked"/>
+				<input type="hidden" name="hidden" th:value="${user}"/>
+			</form>
+		</th>
+	  </tr>
+	</table>
+</div>
+</body>
+</html>
+
+
+	      
