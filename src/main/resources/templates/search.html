@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome Page</title>
+<link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="header">
+	<div class="headertext"><h1>Go Live!!</h1></div>
+	<div class="headerdiv">
+	<form action="/home" method="post">               
+		<input class="headerbutton" type="submit" value="Home"/>
+		<input type="hidden" name="hidden" th:value="${user}"/>
+	</form></div>
+	<div class="headerdivs">
+	<form action="/logout" method="post">               
+		<input class="headerbutton" type="submit" value="Logout"/>
+		<input type="hidden" name="hidden" th:value="${user}"/>
+	</form></div>
+</div>
+<div><h1><center>Search Results</center></h1></div>
+<div>
+	<table style="width:100%" border="1">
+	<tr height="50">
+	<th>
+		Sr.No
+	</th>
+	<th>
+		Track ID
+	</th>
+	<th>
+		Track Title
+	</th>
+	<th>
+		Track Duration
+	</th>
+	<th>
+		Track Release Date
+	</th>
+	</tr>
+		<tr th:each="row : ${searchData}"> 
+	    	<td class="tg bg" th:text="${row.key}"></td> 
+	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[2]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[3]}"></td>  
+		</tr>
+	 </table>
+</div>
+</body>
+</html>
+
+
+	      

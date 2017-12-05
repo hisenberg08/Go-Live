@@ -41,6 +41,15 @@
 			</form>
 		</th>
 	  </tr>
+	  <tr>
+	  	<td colspan="3" align="center">               
+	  <form action="/search" method="post">
+				<input type="text" name="searchInput" value="Search Track"/>
+				<input type="hidden" name="hidden" th:value="${user}"/>
+				<input class="dashbtn" type="submit" value="Search"/>
+		</form>
+		</td>
+	  </tr>
 	</table>
 </div>
 </body>
