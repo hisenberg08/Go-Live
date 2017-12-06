@@ -5,6 +5,7 @@
 <link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/playlist.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div class="header">
@@ -20,14 +21,30 @@
 		<input type="hidden" name="hidden" th:value="${user}"/>
 	</form></div>
 </div>
-<div><h1><center>PlayList</center></h1></div>
-<div>
-	<table>
-		<tr th:each="row : ${playListData}"> 
-	    	<td class="tg bg" th:text="${row.key}"></td> 
-	    	<td class="tg bg" th:text="${row.value}"></td>  
-		</tr>
-	 </table>
+<div class = "playlists"><h1>PlayList
+	<div>
+		<table>
+			<tr th:each="row : ${playListData}"> 
+		    	<td class="tg bg" th:text="${row.key}"></td> 
+		    	<td class="tg bg" th:text="${row.value}"></td>  
+			</tr>
+		 </table>
+	</div>
+</h1></div>
+<div class = "createPlaylistForm">
+	 <p class="form-title">Create New PlayList</p>
+      	<form class="signup" action="/playlist/createnew" method="post">
+            <div>
+             <input type="hidden" name="hidden" th:value="${user}"/>
+             <input type="text" placeholder="playlistName" name="playlistName" required="required"/><br/>
+              <input type="text" list="categroyList" name="playlistCategory" required="required"/><br/>
+				  <datalist id="categroyList">
+				    <option value="Public"/>
+				    <option value="Private"/>
+				  </datalist>
+             <input type="submit" value="Create my Playlist"/>
+			</div>              
+        </form>
 </div>
 </body>
 </html>

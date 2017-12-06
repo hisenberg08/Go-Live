@@ -29,4 +29,17 @@ public class PlayListRepo {
 		return resultMap;
 		
 	}
+
+	public int createNewPlayList(String userName,String playlistCategory, String playlistName) {
+		
+		String query ="insert into playlist (playlistname,playlistowner,playlisttype,playlistcreatedtv) values (?,?,?,now())"; 
+		try{
+			int status = jdbctempplate.update(query,playlistName,userName,playlistCategory);
+			return status;	
+		}catch(Exception e){
+			return 0;
+		}
+		
+		
+	}
 }

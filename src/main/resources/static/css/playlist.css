@@ -1,0 +1,9 @@
+.playlists {
+	float:left;
+}
+
+.createPlaylistForm{
+	float:right;
+	float: right;
+    padding-right: 200px;
+}

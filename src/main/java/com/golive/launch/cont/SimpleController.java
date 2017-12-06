@@ -130,5 +130,21 @@ public class SimpleController {
 		} else
 			return "errorPage";
 	}
-
+	
+	@RequestMapping("/playlist/createnew")
+	public String createNewPlaylist(HttpServletRequest request, Map<String, Object> model){
+		
+		String userName = request.getParameter("hidden");
+		String playlistCategory = request.getParameter("playlistCategory");
+		String playlistName = request.getParameter("playlistName");
+		
+		if(activeUsers.contains(userName)){
+			int status = playList.createNewPlayList(userName,playlistCategory,playlistName);
+			model.put("user", userName);
+			if(status==1)
+				return "searchTrackPage";
+			else return "errorPage";
+		}else
+			return "errorPage";
+	}
 }
