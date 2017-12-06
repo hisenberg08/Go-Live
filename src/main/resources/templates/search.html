@@ -21,7 +21,8 @@
 	</form></div>
 </div>
 <div><h1><center>Search Results</center></h1></div>
-<div>
+<br></br>
+<div id="trackResults">
 	<table style="width:100%" border="1">
 	<tr height="50">
 	<th>
@@ -40,12 +41,62 @@
 		Track Release Date
 	</th>
 	</tr>
-		<tr th:each="row : ${searchData}"> 
+		<tr th:each="row : ${searchData[0]}"> 
 	    	<td class="tg bg" th:text="${row.key}"></td> 
 	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[2]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[3]}"></td>  
+		</tr>
+	 </table>
+</div>
+<br></br>
+<div id="artistResults">
+	<table style="width:100%" border="1">
+	<tr height="50">
+	<th>
+		Sr.No
+	</th>
+	<th>
+		Artist ID
+	</th>
+	<th>
+		Artist Name
+	</th>
+	<th>
+		Artist Description
+	</th>
+	</tr>
+		<tr th:each="row : ${searchData[1]}"> 
+	    	<td class="tg bg" th:text="${row.key}"></td> 
+	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[2]}"></td>  
+		</tr>
+	 </table>
+</div>
+<br></br>
+<div id="albumResults">
+	<table style="width:100%" border="1">
+	<tr height="50">
+	<th>
+		Sr.No
+	</th>
+	<th>
+		Album ID
+	</th>
+	<th>
+		Album Title
+	</th>
+	<th>
+		Album Release Date
+	</th>
+	</tr>
+		<tr th:each="row : ${searchData[2]}"> 
+	    	<td class="tg bg" th:text="${row.key}"></td> 
+	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[2]}"></td>  
 		</tr>
 	 </table>
 </div>
