@@ -18,7 +18,7 @@ public class SearchRepo {
 	public List<Map<Integer, List<String>>> searchAll(String searchFor) {
 		List<Map<Integer, List<String>>> results = new ArrayList<Map<Integer, List<String>>>();
 
-		String trackQuery = "select trackid, tracktitle, trackduration, trackreleasedate from track where tracktitle LIKE ?";
+		String trackQuery = "select trackid, tracktitle, trackduration from track where tracktitle LIKE ?";
 		String artistQuery = "select artistid, artistname, artistdesc from artist where artistname LIKE ?";
 		String albumQuery = "select albumid, albumtitle, albumreleasedate from album where albumtitle LIKE ?";
 
@@ -37,7 +37,6 @@ public class SearchRepo {
 			trackRecord.add(trackResult.get("trackid").toString());
 			trackRecord.add(trackResult.get("tracktitle").toString());
 			trackRecord.add(trackResult.get("trackduration").toString());
-			trackRecord.add(trackResult.get("trackreleasedate").toString());
 			trackResultMap.put(i, trackRecord);
 			i++;
 		}

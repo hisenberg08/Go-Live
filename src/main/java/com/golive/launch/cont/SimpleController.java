@@ -1,4 +1,5 @@
 package com.golive.launch.cont;
+
 //testing
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +105,7 @@ public class SimpleController {
 		String searchFor = request.getParameter("searchInput");
 		if (activeUsers.contains(userName)) {
 			model.put("searchData", search.searchAll("%" + searchFor + "%"));
+			model.put("playListData", playList.getUserPlayList(userName));
 			model.put("user", userName);
 			return "search";
 		} else {
@@ -130,21 +132,22 @@ public class SimpleController {
 		} else
 			return "errorPage";
 	}
-	
+
 	@RequestMapping("/playlist/createnew")
-	public String createNewPlaylist(HttpServletRequest request, Map<String, Object> model){
-		
+	public String createNewPlaylist(HttpServletRequest request, Map<String, Object> model) {
+
 		String userName = request.getParameter("hidden");
 		String playlistCategory = request.getParameter("playlistCategory");
 		String playlistName = request.getParameter("playlistName");
-		
-		if(activeUsers.contains(userName)){
-			int status = playList.createNewPlayList(userName,playlistCategory,playlistName);
+
+		if (activeUsers.contains(userName)) {
+			int status = playList.createNewPlayList(userName, playlistCategory, playlistName);
 			model.put("user", userName);
-			if(status==1)
+			if (status == 1)
 				return "searchTrackPage";
-			else return "errorPage";
-		}else
+			else
+				return "errorPage";
+		} else
 			return "errorPage";
 	}
 }

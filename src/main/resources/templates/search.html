@@ -96,7 +96,10 @@ div.tab button.active {
 		Track Duration
 	</th>
 	<th>
-		Track Release Date
+		Add to PlayList
+	</th>
+	<th>
+		Rate this Track
 	</th>
 	</tr>
 		<tr th:each="row : ${searchData[0]}"> 
@@ -104,7 +107,24 @@ div.tab button.active {
 	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[2]}"></td>  
-	    	<td class="tg bg" th:text="${row.value[3]}"></td>  
+	    	<td class="tg bg">
+	    	<select>
+	    	<option value="blank"></option>
+	    		<th:block th:each="playlist : ${playListData[0]}">
+	    			<option value="${playlist.value[1]}" th:text="${playlist.value[0]}"></option>
+	    		</th:block>
+	    	</select>
+	    	</td>  
+	    	<td class="tg bg">
+	    	<select>
+	    		<option value="blank"></option>
+	    		<option value="1">1</option>
+	    		<option value="2">2</option>
+	    		<option value="3">3</option>
+	    		<option value="4">4</option>
+	    		<option value="5">5</option>
+	    	</select>
+	    	</td>  
 		</tr>
 	 </table>
 </div>
