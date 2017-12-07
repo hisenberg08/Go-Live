@@ -5,6 +5,9 @@
 <link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script th:inline="javascript" src ="js/tab.js"></script>
+<script th:inline="javascript" src ="js/dropdownselect.js"></script>
 <style>
 body {font-family: Arial;}
 
@@ -63,7 +66,7 @@ div.tab button.active {
 	<div class="headerdiv">
 	<form action="/home" method="post">               
 		<input class="headerbutton" type="submit" value="Home"/>
-		<input type="hidden" name="hidden" th:value="${user}"/>
+		<input type="hidden" id="hidden" name="hidden" th:value="${user}"/>
 	</form></div>
 	<div class="headerdivs">
 	<form action="/logout" method="post">               
@@ -116,7 +119,7 @@ div.tab button.active {
 	    	</select>
 	    	</td>  
 	    	<td class="tg bg">
-	    	<select>
+	    	<select id="rating" class="rating">
 	    		<option value="blank"></option>
 	    		<option value="1">1</option>
 	    		<option value="2">2</option>
@@ -178,26 +181,6 @@ div.tab button.active {
 		</tr>
 	 </table>
 </div>
-
-<script th:inline="javascript">
-/*<![CDATA[*/
-function openSearch(evt, searchType) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(searchType).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-/*]]>*/
-</script>
-
-
 </body>
 </html>
 
