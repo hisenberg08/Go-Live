@@ -150,4 +150,34 @@ public class SimpleController {
 		} else
 			return "errorPage";
 	}
+	
+	@RequestMapping("/playlist/getTracks")
+	public String getTracks(HttpServletRequest request, Map<String, Object> model){
+	
+		String userName = request.getParameter("hidden");
+		String tracksFor = request.getParameter("type");
+		
+		
+		if(activeUsers.contains(userName)){
+			if(tracksFor.equals("playlist")){
+				int playlistId = Integer.parseInt(request.getParameter("playlistid"));
+				String playlistOwner = request.getParameter("playlistowner");
+				String playlistName = request.getParameter("playlistName");
+				
+				model.put("tracks", playList.getTracksforPlaylist(playlistId,playlistOwner));
+				model.put("user", userName);
+				model.put("playlistName", playlistName);
+				
+				if(userName.equals(playlistOwner))
+					model.put("owner", "you");
+				else
+					model.put("owner", playlistOwner);
+				
+				return "displayPlaylistTracks";
+			}
+			
+			return "errorPage";
+		}else
+			return "errorPage";
+	}
 }
