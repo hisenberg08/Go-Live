@@ -21,12 +21,17 @@
 	</form></div>
 </div>
 <p class="welcomeuser" th:text="'Welcome '+${user}+' Lets create a playlist!!!'"></p>
-
+	<div class = "searchBar">
 	  <form action="/search" method="post">
 				<input type="text" name="searchInput" value="Search Track"/>
 				<input type="hidden" name="hidden" th:value="${user}"/>
 				<input class="dashbtn" type="submit" value="Search"/>
 		</form>
+	</div>
+	<div class = "addTrack">
+	
+	
+	</div>
 </body>
 </html>
 

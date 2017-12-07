@@ -21,23 +21,57 @@
 		<input type="hidden" name="hidden" th:value="${user}"/>
 	</form></div>
 </div>
-<div class = "playlists"><h1>PlayList
-	<div>
-		<table>
-			<tr th:each="row : ${playListData}"> 
+
+<div><h1><center>Your playlists</center></h1></div>
+<br></br>
+
+<div class="tab">
+  <button class="tablinks" onclick="openSearch(event, 'userPlaylist')">My Playlist</button>
+  <button class="tablinks" onclick="openSearch(event, 'followedUserPlaylist')">Friend's Playlist</button>
+  <button class="tablinks" onclick="openSearch(event, 'createPlaylistForm')">Create New Playlist</button>
+</div>
+
+<div id="userPlaylist" class="tabcontent" style="display:block">
+	<table style="width:60%" border="1">
+			<tr height="50">
+	<th>
+		Sr.No
+	</th>	
+	<th>
+		Play List Title
+	</th>
+	</tr>
+		<tr th:each="row : ${playListData[0]}"> 
+	    	<td class="tg bg" th:text="${row.key}"></td> 
+	    	<td class="tg bg" th:text="${row.value}"></td>  
+		</tr>
+	 </table>
+</div>
+
+<div id = "followedUserPlaylist" class="tabcontent">
+		<table style="width:60%" border="1">
+			<tr height="50">
+	<th>
+		Sr.No
+	</th>	
+	<th>
+		Play List Title
+	</th>
+	</tr>
+			<tr th:each="row : ${playListData[1]}"> 
 		    	<td class="tg bg" th:text="${row.key}"></td> 
 		    	<td class="tg bg" th:text="${row.value}"></td>  
 			</tr>
 		 </table>
 	</div>
-</h1></div>
-<div class = "createPlaylistForm">
-	 <p class="form-title">Create New PlayList</p>
+
+<div id = "createPlaylistForm" class="tabcontent">
+	 <h2>Create New PlayList</h2>
       	<form class="signup" action="/playlist/createnew" method="post">
             <div>
              <input type="hidden" name="hidden" th:value="${user}"/>
-             <input type="text" placeholder="playlistName" name="playlistName" required="required"/><br/>
-              <input type="text" list="categroyList" name="playlistCategory" required="required"/><br/>
+             <input type="text" placeholder="playlistName" name="playlistName" required="required"/><br/><br/>
+              <input type="text" list="categroyList" name="playlistCategory" required="required"/><br/><br/>
 				  <datalist id="categroyList">
 				    <option value="Public"/>
 				    <option value="Private"/>
@@ -46,6 +80,24 @@
 			</div>              
         </form>
 </div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+function openSearch(evt, searchType) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(searchType).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+/*]]>*/
+</script>
+
 </body>
 </html>
 

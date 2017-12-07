@@ -25,7 +25,7 @@
 	<p class="welcomeuser" th:text="'Welcome '+${user}+'!!!'"></p>
 	<table style="width:100%" border="1" >
 	  <tr height="50">
-	    <th><form action="/playlist" method="post">               
+	    <th><form action="/playlist" method="get">               
 				<input class="dashbtn" type="submit" value="My Playlist"/>
 				<input type="hidden" name="hidden" th:value="${user}"/>
 			</form>
