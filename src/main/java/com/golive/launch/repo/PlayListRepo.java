@@ -15,15 +15,15 @@ public class PlayListRepo {
 	@Autowired
 	private JdbcTemplate jdbctempplate; 
 	
-	public List<Map<Integer, String>> getUserPlayList(String userName){
+	public List<Map<Integer, List<String>>> getUserPlayList(String userName){
 		
-		String getUserPlaylist = "select playlistname from playlist where playlistowner = ?";
-		String getfollowedUserPlaylist = "select playlistname from playlist where playlistowner in"
+		String getUserPlaylist = "select playlistname,playlistid from playlist where playlistowner = ?";
+		String getfollowedUserPlaylist = "select playlistname,playlistid from playlist where playlistowner in"
 				+ "(select followeduser from follows where followinguser = ? ) and playlisttype = 'public'";
 		
-		List<Map<Integer, String>> resultMap = new ArrayList<>();
-		Map<Integer,String> userPlaylistMap =new HashMap<Integer,String>();
-		Map<Integer,String> followedUserPlaylistMap =new HashMap<Integer,String>();
+		List<Map<Integer, List<String>>> resultMap = new ArrayList<>();
+		Map<Integer, List<String>> userPlaylistMap =new HashMap<Integer, List<String>>();
+		Map<Integer, List<String>> followedUserPlaylistMap =new HashMap<Integer, List<String>>();
 		
 		
 		List<Map<String, Object>> userPlaylist =  jdbctempplate.queryForList(getUserPlaylist,userName);
@@ -31,13 +31,19 @@ public class PlayListRepo {
 		
 		int i=1;
 		for(Map<String, Object> result : userPlaylist){
-			userPlaylistMap.put(i, result.get("playlistname").toString());
+			List<String> userPlaylistRecord = new ArrayList<String>();
+			userPlaylistRecord.add(result.get("playlistname").toString());
+			userPlaylistRecord.add(result.get("playlistid").toString());
+			userPlaylistMap.put(i,userPlaylistRecord);
 			i++;
 		}
 
 		int j=1;
 		for(Map<String, Object> result : followedUserPlayliys){
-			followedUserPlaylistMap.put(j, result.get("playlistname").toString());
+			List<String> followedUserPlaylistRecord = new ArrayList<String>();
+			followedUserPlaylistRecord.add(result.get("playlistname").toString());
+			followedUserPlaylistRecord.add(result.get("playlistid").toString());
+			followedUserPlaylistMap.put(j, followedUserPlaylistRecord);
 			j++;
 		}
 		

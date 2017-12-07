@@ -33,37 +33,47 @@
 
 <div id="userPlaylist" class="tabcontent" style="display:block">
 	<table style="width:60%" border="1">
-			<tr height="50">
-	<th>
-		Sr.No
-	</th>	
-	<th>
-		Play List Title
-	</th>
-	</tr>
-		<tr th:each="row : ${playListData[0]}"> 
-	    	<td class="tg bg" th:text="${row.key}"></td> 
-	    	<td class="tg bg" th:text="${row.value}"></td>  
+		<tr height="50">
+			<th>
+				Sr.No
+			</th>	
+			<th>
+				Play List Title
+			</th>
 		</tr>
-	 </table>
+		<tr th:each="row : ${playListData[0]}"> 
+		<td class="tg bg" th:text="${row.key}"></td> 
+		    <td>
+	    		<form action="/playlist" method="post">               
+					<input class="dashbtn" type="submit" th:value="${row.value[0]}"/>
+					<input type="hidden" name="hidden" th:value="${row.value[1]}"/>
+				</form>
+	    	</td> 
+		</tr>
+	</table>
 </div>
 
 <div id = "followedUserPlaylist" class="tabcontent">
-		<table style="width:60%" border="1">
-			<tr height="50">
-	<th>
-		Sr.No
-	</th>	
-	<th>
-		Play List Title
-	</th>
-	</tr>
-			<tr th:each="row : ${playListData[1]}"> 
-		    	<td class="tg bg" th:text="${row.key}"></td> 
-		    	<td class="tg bg" th:text="${row.value}"></td>  
-			</tr>
-		 </table>
-	</div>
+	<table style="width:60%" border="1">
+		<tr height="50">
+			<th>
+				Sr.No
+			</th>	
+			<th>
+				Play List Title
+			</th>
+		</tr>
+		<tr th:each="row : ${playListData[1]}"> 
+		<td class="tg bg" th:text="${row.key}"></td> 
+		    <td>
+	    		<form action="/playlist" method="post">               
+					<input class="dashbtn" type="submit" th:value="${row.value[0]}"/>
+					<input type="hidden" name="hidden" th:value="${row.value[1]}"/>
+				</form>
+	    	</td> 
+		</tr>
+	</table>
+</div>
 
 <div id = "createPlaylistForm" class="tabcontent">
 	 <h2>Create New PlayList</h2>
