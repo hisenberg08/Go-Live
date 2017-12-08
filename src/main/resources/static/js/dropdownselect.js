@@ -1,16 +1,17 @@
 $(document).ready(function() {
 	$(".rating").change(function (){
-	    alert($(this).val());
+	    var rate = $(this).val();
 	    var uname = $('#hidden').val();
+	    var trackId = $(this).closest('tr').find("#trackIdtest1").val();
 	    $.ajax({
 	            url: "/rateTrack",
 	            type: "POST",
-	            data: {username : uname},
+	            data: {username : uname, rating : rate, trackId : trackId},
 	            success: function () {
-	                alert("Success");
+	                alert("Rating successful");
 	            },
 	            error: function () {
-	                alert("Error");
+	                alert("Error occurred. Please try again");
 	            }
 	        });
 	});

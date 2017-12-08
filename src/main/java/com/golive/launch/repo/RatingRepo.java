@@ -9,5 +9,14 @@ public class RatingRepo {
 
 	@Autowired
 	private JdbcTemplate jdbctempplate;
+	private String ratingInsertQuery = "Insert into userratetrack (username, trackid, trackrating, ratingdtv) values (?,?,?,now())";
+
+	public int insertRating(String userName, String trackId, String rating) {
+		int rate = jdbctempplate.update(ratingInsertQuery, userName, trackId, rating);
+		if (rate == 1)
+			return rate;
+		else
+			return 0;
+	}
 
 }

@@ -19,13 +19,15 @@ import com.golive.launch.repo.RatingRepo;
 public class RestfulController {
 
 	@Autowired
-	RatingRepo rating;
+	RatingRepo ratingrepo;
 
 	@RequestMapping(value = "/rateTrack", method = RequestMethod.POST)
 	public String playlist(HttpServletRequest request, HttpServletResponse response, Map<String, Object> model) {
-		SimpleController simpleController = new SimpleController();
 		String userName = request.getParameter("username");
+		String trackId = request.getParameter("trackId");
+		String rating = request.getParameter("rating");
 
+		int res = ratingrepo.insertRating(userName, trackId, rating);
 		return userName;
 	}
 
