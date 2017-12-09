@@ -21,36 +21,42 @@ public class RestfulController {
 
 	@Autowired
 	RatingRepo ratingrepo;
-	
-	@Autowired 
+
+	@Autowired
 	PlayListRepo playListRepo;
 
 	@Autowired
 	SimpleController simpleController;
-	
+
 	@RequestMapping(value = "/rateTrack", method = RequestMethod.POST)
-	public String playlist(HttpServletRequest request, HttpServletResponse response, Map<String, Object> model) {
+	public int rateTrack(HttpServletRequest request, HttpServletResponse response, Map<String, Object> model) {
 		String userName = request.getParameter("username");
 		String trackId = request.getParameter("trackId");
 		String rating = request.getParameter("rating");
-		
+		if (rating.equals("blank"))
+			return 2;
 		int res = ratingrepo.insertRating(userName, trackId, rating);
-		return userName;
+		return res;
 	}
 
 	@RequestMapping("/deleteTrackFromplaylist")
-	public void deleteTrackFromplaylist(HttpServletRequest request){
-		
+	public void deleteTrackFromplaylist(HttpServletRequest request) {
+
 		int playlistId = Integer.parseInt(request.getParameter("playlistId"));
 		String username = request.getParameter("user");
 		String trackid = (request.getParameter("trackid"));
-		
-		
-		if(SimpleController.activeUsers.contains(username)){
-			playListRepo.deleteTrackFromPlaylist(playlistId,trackid);
-		}else{
-			//write code here when user not logged in will recieve error message
-		}
+
+		playListRepo.deleteTrackFromPlaylist(playlistId, trackid);
 	}
-	
+
+	@RequestMapping(value = "/insertTrack", method = RequestMethod.POST)
+	public int insertInPlaylist(HttpServletRequest request, HttpServletResponse response, Map<String, Object> model) {
+		String playListId = request.getParameter("playListId");
+		String trackId = request.getParameter("trackId");
+		if (playListId.equals("blank"))
+			return 2;
+		int res = playListRepo.addTrackInPlaylist(playListId, trackId);
+		return res;
+	}
+
 }
