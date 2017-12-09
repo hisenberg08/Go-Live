@@ -8,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script th:inline="javascript" src ="js/tab.js"></script>
 <script th:inline="javascript" src ="js/dropdownselect.js"></script>
+<script th:inline="javascript" src ="js/likeSelect.js"></script>
 <style>
 body {font-family: Arial;}
 
@@ -141,6 +142,9 @@ div.tab button.active {
 	<th>
 		Artist Description
 	</th>
+	<th>
+		Like Artist
+	</th>
 	</tr>
 		<tr th:each="row : ${searchData[1]}"> 
 	    	<td class="tg bg" th:text="${row.key}"></td>
@@ -155,6 +159,11 @@ div.tab button.active {
 			    </form>  
 	    	</td>  
 	    	<td class="tg bg" th:text="${row.value[2]}"></td>
+	    	<td>
+	    			<input type="hidden" class="artistId" name="artistId" th:value="${row.value[0]}"/>
+	    			<input type="hidden" class="likedCheck" name="likedCheck" th:value="${row.value[3]}"/>
+	    			<input type="checkbox" id="isLiked" name="isLiked"/>
+	    	</td>
 		</tr>
 	 </table>
 </div>

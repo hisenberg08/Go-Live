@@ -2,6 +2,7 @@ package com.golive.launch.cont;
 
 //testing
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -113,7 +114,20 @@ public class SimpleController {
 		String userName = request.getParameter("hidden");
 		String searchFor = request.getParameter("searchInput");
 		if (activeUsers.contains(userName)) {
-			model.put("searchData", search.searchAll("%" + searchFor + "%"));
+
+			List<Map<Integer, List<String>>> results = search.searchAll("%" + searchFor + "%");
+			HashSet<String> likedArtists = artistRepo.getLikedArtists(userName);
+			Map<Integer, List<String>> artistResultMap = results.get(1);
+			for (int i = 1; i <= artistResultMap.size(); i++) {
+				List<String> artistRecord = artistResultMap.get(i);
+				String artistRecordId = artistRecord.get(0);
+				if (likedArtists.contains(artistRecordId)) {
+					artistRecord.add("Y");
+				} else {
+					artistRecord.add("N");
+				}
+			}
+			model.put("searchData", results);
 			model.put("playListData", playList.getUserPlayList(userName));
 			model.put("user", userName);
 			return "search";

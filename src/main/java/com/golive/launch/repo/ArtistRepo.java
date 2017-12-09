@@ -2,6 +2,7 @@ package com.golive.launch.repo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class ArtistRepo {
 	private JdbcTemplate jdbctempplate;
 
 	private String getTracksforArtistQuery = "select t.trackid,t.tracktitle,t.trackduration from trackartist ta left join track t on ta.trackid = t.trackid where ta.artistid = ?";
+	private String getLikedArtistsQuery = "select ua.artistid from userlikeartist ua where ua.username=?";
 
 	public Map<Integer, List<String>> getTracksforArtist(String artistId) {
 
@@ -31,5 +33,14 @@ public class ArtistRepo {
 			i++;
 		}
 		return artistTrackMap;
+	}
+
+	public HashSet<String> getLikedArtists(String username) {
+		List<Map<String, Object>> likedArtists = jdbctempplate.queryForList(getLikedArtistsQuery, username);
+		HashSet<String> likedArtistsSet = new HashSet<String>();
+		for (Map<String, Object> result : likedArtists) {
+			likedArtistsSet.add(result.get("artistid").toString());
+		}
+		return likedArtistsSet;
 	}
 }
