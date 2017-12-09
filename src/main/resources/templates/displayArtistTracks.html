@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Artist Track</title>
+<link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
+<link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script th:inline="javascript" src ="js/tab.js"></script>
+<script th:inline="javascript" src ="js/dropdownselect.js"></script>
+</head>
+<body>
+<div class="header">
+	<div class="headertext"><h1>Go Live!!</h1></div>
+	<div class="headerdiv">
+	<form action="/home" method="post">               
+		<input class="headerbutton" type="submit" value="Home"/>
+		<input type="hidden" id="hidden" name="hidden" th:value="${user}"/>
+	</form></div>
+	<div class="headerdivs">
+	<form action="/logout" method="post">               
+		<input class="headerbutton" type="submit" value="Logout"/>
+		<input type="hidden" name="hidden" th:value="${user}"/>
+	</form></div>
+</div>
+<input type="hidden" id="artistId" name="artistId" th:value="${artistId}"/>
+<h1><p th:text="'Artist Name:- '+${artistName}"></p></h1>
+
+<table style="width:100%" border="1">
+	<tr height="50">
+	<th>
+		Sr.No
+	</th>
+	<th>
+		Track Title
+	</th>
+	<th>
+		Track Duration
+	</th>
+	<th>
+		Add to PlayList
+	</th>
+	<th>
+		Rate this Track
+	</th>
+	</tr>
+		<tr th:each="row : ${tracks}"> 
+	    	<input type="hidden" id="trackIdtest1" th:value="${row.value[2]}"/>
+	    	<td class="tg bg" th:text="${row.key}"></td> 
+	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
+	    	<td class="tg bg">
+	    	<select id="addTrack" class="addTrack">
+	    	<option value="blank"></option>
+	    		<th:block th:each="playlist : ${playListData[0]}">
+	    			<option th:value="${playlist.value[1]}" th:text="${playlist.value[0]}"></option>
+	    		</th:block>
+	    	</select> 
+	    	</td>  
+	    	<td class="tg bg">
+	    	<select id="rating" class="rating">
+	    		<option value="blank"></option>
+	    		<option value="1">1</option>
+	    		<option value="2">2</option>
+	    		<option value="3">3</option>
+	    		<option value="4">4</option>
+	    		<option value="5">5</option>
+	    	</select>
+	    	</td>  
+		</tr>
+	 </table>
+</body>
+</html>

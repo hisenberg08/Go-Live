@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.golive.launch.entity.UserDetails;
+import com.golive.launch.repo.ArtistRepo;
 import com.golive.launch.repo.LoginRepo;
 import com.golive.launch.repo.PlayListRepo;
 import com.golive.launch.repo.SaveUserInfo;
@@ -31,6 +32,9 @@ public class SimpleController {
 
 	@Autowired
 	PlayListRepo playList;
+
+	@Autowired
+	ArtistRepo artistRepo;
 
 	@Autowired
 	SearchRepo search;
@@ -150,35 +154,45 @@ public class SimpleController {
 		} else
 			return "errorPage";
 	}
-	
+
 	@RequestMapping("/getTracks")
-	public String getTracks(HttpServletRequest request, Map<String, Object> model){
-	
+	public String getTracks(HttpServletRequest request, Map<String, Object> model) {
+
 		String userName = request.getParameter("hidden");
 		String tracksFor = request.getParameter("type");
-		
-		
-		if(activeUsers.contains(userName)){
-			if(tracksFor.equals("playlist")){
+
+		if (activeUsers.contains(userName)) {
+			if (tracksFor.equals("playlist")) {
 				int playlistId = Integer.parseInt(request.getParameter("playlistid"));
 				String playlistOwner = request.getParameter("playlistowner");
 				String playlistName = request.getParameter("playlistName");
-				
-				model.put("tracks", playList.getTracksforPlaylist(playlistId,playlistOwner));
+
+				model.put("tracks", playList.getTracksforPlaylist(playlistId, playlistOwner));
 				model.put("user", userName);
 				model.put("playlistId", playlistId);
 				model.put("playlistName", playlistName);
-				
-				if(userName.equals(playlistOwner))
+
+				if (userName.equals(playlistOwner))
 					model.put("owner", "you");
 				else
 					model.put("owner", playlistOwner);
-				
+
 				return "displayPlaylistTracks";
+			} else if (tracksFor.equals("artist")) {
+				String artistId = request.getParameter("artistId");
+				String artistName = request.getParameter("artistName");
+
+				model.put("tracks", artistRepo.getTracksforArtist(artistId));
+				model.put("user", userName);
+				model.put("artistId", artistId);
+				model.put("artistName", artistName);
+				model.put("playListData", playList.getUserPlayList(userName));
+
+				return "displayArtistTracks";
 			}
-			
+
 			return "errorPage";
-		}else
+		} else
 			return "errorPage";
 	}
 }

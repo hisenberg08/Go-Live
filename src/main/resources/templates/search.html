@@ -136,9 +136,6 @@ div.tab button.active {
 		Sr.No
 	</th>
 	<th>
-		Artist ID
-	</th>
-	<th>
 		Artist Name
 	</th>
 	<th>
@@ -146,10 +143,18 @@ div.tab button.active {
 	</th>
 	</tr>
 		<tr th:each="row : ${searchData[1]}"> 
-	    	<td class="tg bg" th:text="${row.key}"></td> 
-	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
-	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
-	    	<td class="tg bg" th:text="${row.value[2]}"></td>  
+	    	<td class="tg bg" th:text="${row.key}"></td>
+	    	<td> 
+				<form action="/getTracks" method="post">  
+		    		<input class="dashbtn" type="submit" name="artistName" th:value="${row.value[1]}"/>  
+		    		<input type="hidden" name="artistId" th:value="${row.value[0]}"/>  
+		    		<input type="hidden" name="artistName" th:value="${row.value[1]}"/>
+			   	 	<input type="hidden" name="type" th:value="artist"/>
+			   	 	<input type="hidden" name="hidden" th:value="${user}"/>
+			   	 	<input type="hidden" name="playListData" th:value="${playListData}"/>
+			    </form>  
+	    	</td>  
+	    	<td class="tg bg" th:text="${row.value[2]}"></td>
 		</tr>
 	 </table>
 </div>
