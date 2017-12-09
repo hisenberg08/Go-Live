@@ -6,6 +6,8 @@
 <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/playlist.css}" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script th:inline="javascript" src ="js/playlist.js"></script>
 </head>
 <body>
 <div class="header">
@@ -40,17 +42,24 @@
 			<th>
 				Play List Title
 			</th>
+			<th>
+				Delete Playlist
+			</th>
 		</tr>
 		<tr th:each="row : ${playListData[0]}"> 
 		<td class="tg bg" th:text="${row.key}"></td> 
 		    <td>
 	    		<form action="/getTracks" method="post">               
 					<input class="dashbtn" type="submit" name="playlistName" th:value="${row.value[0]}"/>
-					<input type="hidden" name="playlistid" th:value="${row.value[1]}"/>
+					<input type="hidden" id="playlistid" name="playlistid" th:value="${row.value[1]}"/>
 					<input type="hidden" name="playlistowner" th:value="${user}"/>
 					<input type="hidden" name="type" th:value="playlist"/>
-					<input type="hidden" name="hidden" th:value="${user}"/>
+					<input type="hidden" id = "user" name="hidden" th:value="${user}"/>
 				</form>
+	    	</td>
+	    	<td class="deleteColumn">
+	    	<button id="hidebtn" type="button">Delete Playlist</button>
+	    	<input type="hidden" id="playlistid" name="playlistid" th:value="${row.value[1]}"/>
 	    	</td> 
 		</tr>
 	</table>

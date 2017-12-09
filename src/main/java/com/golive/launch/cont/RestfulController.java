@@ -58,5 +58,13 @@ public class RestfulController {
 		int res = playListRepo.addTrackInPlaylist(playListId, trackId);
 		return res;
 	}
+	
+	@RequestMapping("/deletePlaylist")
+	public void deletePlaylist(HttpServletRequest request){
+		
+		int playlistid = Integer.parseInt(request.getParameter("playlistId"));
+		playListRepo.deletePlaylist(playlistid);
+		
+	}
 
 }

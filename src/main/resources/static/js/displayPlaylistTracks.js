@@ -11,7 +11,7 @@ $(document).ready(function() {
 	$("button").click(function(){
 		 var playlistId = $('#playlistId').val();
 		 var user = $('#user').val();
-		 var trackid = $(this).parent().siblings('#trackid').val();;
+		 var trackid = $(this).parent().siblings('#trackid').val();
 		 $(this).attr('disabled',true);
 		 $.ajax({
 	            url: "/deleteTrackFromplaylist",

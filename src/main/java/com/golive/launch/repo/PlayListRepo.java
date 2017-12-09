@@ -102,4 +102,18 @@ public class PlayListRepo {
 			return 0;
 		}
 	}
+
+	public int deletePlaylist(int playlistid) {
+		
+		String deletePlaylistTrack = "delete from playlisttrack where playlistid = ?";
+		String deletePlaylist = "delete from playlist where playlistid = ?";
+		int status =0;
+		try{
+			jdbctempplate.update(deletePlaylistTrack,playlistid);
+			status =jdbctempplate.update(deletePlaylist,playlistid);
+		}catch(Exception e){
+			return 0;
+		}
+		return status;
+	}
 }
