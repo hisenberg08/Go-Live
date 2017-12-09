@@ -1,6 +1,6 @@
 .dashboard{
 	text-align: center;
-	margin-top: 10%;
+	/* margin-top: 10%; */
 }
 .dashbtn{
 	background:none!important;
@@ -16,5 +16,16 @@
 }
 
 .welcomeuser{
+	padding-top: 17px;
 	font-size: 30px;
+}
+
+.useraction{
+	width: 50%;
+    border: black;
+    height: 30px;
+}
+
+.dashTable{
+	padding-top: 3%;
 }

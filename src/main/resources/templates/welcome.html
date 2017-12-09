@@ -5,6 +5,72 @@
 <link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
+
+
+<style type="text/css">
+
+#marqueecontainer{
+position: relative;
+width: 200px; /*marquee width */
+height: 200px; /*marquee height */
+background-color: white;
+overflow: hidden;
+border: 3px solid orange;
+padding: 2px;
+padding-left: 4px;
+}
+
+</style>
+
+<script type="text/javascript">
+
+/***********************************************
+* Cross browser Marquee II- (c) Dynamic Drive (www.dynamicdrive.com)
+* Please keep this notice intact
+* Visit http://www.dynamicdrive.com/ for this script and 100s more.
+***********************************************/
+
+var delayb4scroll=2000 //Specify initial delay before marquee starts to scroll on page (2000=2 seconds)
+var marqueespeed=2 //Specify marquee scroll speed (larger is faster 1-10)
+var pauseit=1 //Pause marquee onMousever (0=no. 1=yes)?
+
+////NO NEED TO EDIT BELOW THIS LINE////////////
+
+var copyspeed=marqueespeed
+var pausespeed=(pauseit==0)? copyspeed: 0
+var actualheight=''
+
+function scrollmarquee(){
+if (parseInt(cross_marquee.style.top)>(actualheight*(-1)+8))
+cross_marquee.style.top=parseInt(cross_marquee.style.top)-copyspeed+"px"
+else
+cross_marquee.style.top=parseInt(marqueeheight)+8+"px"
+}
+
+function initializemarquee(){
+cross_marquee=document.getElementById("vmarquee")
+cross_marquee.style.top=0
+marqueeheight=document.getElementById("marqueecontainer").offsetHeight
+actualheight=cross_marquee.offsetHeight
+if (window.opera || navigator.userAgent.indexOf("Netscape/7")!=-1){ //if Opera or Netscape 7x, add scrollbars to scroll and exit
+cross_marquee.style.height=marqueeheight+"px"
+cross_marquee.style.overflow="scroll"
+return
+}
+setTimeout('lefttime=setInterval("scrollmarquee()",30)', delayb4scroll)
+}
+
+if (window.addEventListener)
+window.addEventListener("load", initializemarquee, false)
+else if (window.attachEvent)
+window.attachEvent("onload", initializemarquee)
+else if (document.getElementById)
+window.onload=initializemarquee
+
+
+</script>
+
+
 </head>
 <body>
 <div class="header">
@@ -20,37 +86,53 @@
 		<input type="hidden" name="hidden" th:value="${user}"/>
 	</form></div>
 </div>
-<div><h1><center>Dashboard</center></h1></div>
+<!-- <div><h1><center>Dashboard</center></h1></div> -->
 <div class="dashboard">
 	<p class="welcomeuser" th:text="'Welcome '+${user}+'!!!'"></p>
-	<table style="width:100%" border="1" >
+		<div>
+			<form action="/search" method="post">
+					<input type="text" class = "useraction" name="searchInput" placeholder="Search Bar" required="required"/>
+					<input type="hidden" name="hidden" th:value="${user}"/>
+					<input class="dashbtn" type="submit" value="Search"/>
+			</form>
+		</div>
+	<div class = "dashTable">
+	<table style="width:100%" border="1">
 	  <tr height="50">
-	    <th><form action="/playlist" method="get">               
+	    <th width= "30%" height="300"><form action="/playlist" method="get">               
 				<input class="dashbtn" type="submit" value="My Playlist"/>
 				<input type="hidden" name="hidden" th:value="${user}"/>
 			</form>
 		</th>
-		<th><form action="/playlist" method="post">               
-				<input class="dashbtn" type="submit" value="Create PlayList"/>
-				<input type="hidden" name="hidden" th:value="${user}"/>
-			</form>
-		</th>
-		<th><form action="/playlist" method="post">               
-				<input class="dashbtn" type="submit" value="Most Liked"/>
-				<input type="hidden" name="hidden" th:value="${user}"/>
-			</form>
+		<th height="300" style="background-color:grey">
+			
+			<div id="marqueecontainer" style="width: 100%;height: 100%; background-color: gray;border: 0; "  onMouseover="copyspeed=pausespeed" onMouseout="copyspeed=marqueespeed">
+			<div id="vmarquee" style="position: absolute; width: 98%;">	
+				<div class = "news">
+				<p>Most liked artists</p>
+				<ul th:each="row : ${news['topArtist']}">
+				  <li th:text="${row}" style = "text-align : left"></li>
+				</ul>
+				<p>Latest Tracks</p>
+				<ul th:each="row : ${news['latestTrack']}">
+				  <li th:text="${row}" style = "text-align : left"></li>
+				</ul>
+				<p>Latest Albums</p>
+				<ul th:each="row : ${news['latestAlbum']}">
+				  <li th:text="${row}" style = "text-align : left"></li>
+				</ul>
+				<p>Highest Rated Tracks</p>
+				<ul th:each="row : ${news['tracktitle']}">
+				  <li th:text="${row}" style = "text-align : left"></li>
+				</ul>
+			</div>
+
+
+			</div>
+			</div>
 		</th>
 	  </tr>
-	  <tr>
-	  	<td colspan="3" align="center">               
-	  <form action="/search" method="post">
-				<input type="text" name="searchInput" placeholder="Search Bar" required="required"/>
-				<input type="hidden" name="hidden" th:value="${user}"/>
-				<input class="dashbtn" type="submit" value="Search"/>
-		</form>
-		</td>
-	  </tr>
-	</table>
+	</table></div>
 </div>
 </body>
 </html>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.golive.launch.entity.UserDetails;
 import com.golive.launch.repo.ArtistRepo;
+import com.golive.launch.repo.DashboardRepo;
 import com.golive.launch.repo.LoginRepo;
 import com.golive.launch.repo.PlayListRepo;
 import com.golive.launch.repo.SaveUserInfo;
@@ -38,6 +39,9 @@ public class SimpleController {
 
 	@Autowired
 	SearchRepo search;
+	
+	@Autowired
+	DashboardRepo dashRepo;
 
 	@RequestMapping("/login")
 	public String test() {
@@ -58,6 +62,7 @@ public class SimpleController {
 
 			model.put("user", userName);
 			activeUsers.add(userName);
+			model.put("news",dashRepo.getNewsFeed());
 			return "welcome";
 		} else
 			return "login";
@@ -122,6 +127,7 @@ public class SimpleController {
 		String userName = request.getParameter("hidden");
 		if (activeUsers.contains(userName)) {
 			model.put("user", userName);
+			model.put("news",dashRepo.getNewsFeed());
 			return "welcome";
 		} else
 			return "errorPage";
