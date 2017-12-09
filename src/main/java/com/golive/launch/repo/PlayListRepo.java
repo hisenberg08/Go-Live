@@ -71,7 +71,7 @@ public class PlayListRepo {
 
 	public Map<Integer, List<String>> getTracksforPlaylist(int playlistId, String playlistOwner) {
 		
-		String getTrackForPlayList = "select t.tracktitle,t.trackduration from playlisttrack p left join track t "
+		String getTrackForPlayList = "select t.trackid,t.tracktitle,t.trackduration from playlisttrack p left join track t "
 				+ "on p.trackid = t.trackid where playlistid = ?";
 		
 		List<Map<String, Object>> playlistTrack =  jdbctempplate.queryForList(getTrackForPlayList,playlistId);
@@ -81,10 +81,17 @@ public class PlayListRepo {
 			List<String> userPlaylistRecord = new ArrayList<String>();
 			userPlaylistRecord.add(result.get("tracktitle").toString());
 			userPlaylistRecord.add(result.get("trackduration").toString());
+			userPlaylistRecord.add(result.get("trackid").toString());
 			playlsitTrackMap.put(i,userPlaylistRecord);
 			i++;
 		}
 		return playlsitTrackMap;
 		
+	}
+
+	public void deleteTrackFromPlaylist(int playlistId, String trackid) {
+		
+		String query = "delete from playlisttrack where playlistid = ? and trackid =?";
+		jdbctempplate.update(query,playlistId,trackid);
 	}
 }

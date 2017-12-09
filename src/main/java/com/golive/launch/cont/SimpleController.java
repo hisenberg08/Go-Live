@@ -40,7 +40,7 @@ public class SimpleController {
 		return "login";
 	}
 
-	public List<String> activeUsers = new ArrayList<String>();
+	public static List<String> activeUsers = new ArrayList<String>();
 	// public Map<String,String> activeUsers = new HashMap<>();
 
 	@RequestMapping("/verifyUser")
@@ -133,7 +133,7 @@ public class SimpleController {
 			return "errorPage";
 	}
 
-	@RequestMapping("/playlist/createnew")
+	@RequestMapping("/createnew")
 	public String createNewPlaylist(HttpServletRequest request, Map<String, Object> model) {
 
 		String userName = request.getParameter("hidden");
@@ -151,7 +151,7 @@ public class SimpleController {
 			return "errorPage";
 	}
 	
-	@RequestMapping("/playlist/getTracks")
+	@RequestMapping("/getTracks")
 	public String getTracks(HttpServletRequest request, Map<String, Object> model){
 	
 		String userName = request.getParameter("hidden");
@@ -166,6 +166,7 @@ public class SimpleController {
 				
 				model.put("tracks", playList.getTracksforPlaylist(playlistId,playlistOwner));
 				model.put("user", userName);
+				model.put("playlistId", playlistId);
 				model.put("playlistName", playlistName);
 				
 				if(userName.equals(playlistOwner))

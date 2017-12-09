@@ -5,6 +5,8 @@
 <link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script th:inline="javascript" src ="js/displayPlaylistTracks.js"></script>
 </head>
 <body>
 <div class="header">
@@ -12,7 +14,7 @@
 	<div class="headerdiv">
 	<form action="/home" method="post">               
 		<input class="headerbutton" type="submit" value="Home"/>
-		<input type="hidden" name="hidden" th:value="${user}"/>
+		<input type="hidden" id="user" name="hidden" th:value="${user}"/>
 	</form></div>
 	<div class="headerdivs">
 	<form action="/logout" method="post">               
@@ -20,6 +22,8 @@
 		<input type="hidden" name="hidden" th:value="${user}"/>
 	</form></div>
 </div>
+<input type="hidden" id="playlistId" name="hidden" th:value="${playlistId}"/>
+<input type="hidden" id="owner" name="hidden" th:value="${owner}"/>
 	<h1><p th:text="'Playlist Owner:- '+${owner}"></p></h1>
 		<table style="width:100%" border="1">
 	<tr height="50">
@@ -32,11 +36,16 @@
 	<th>
 		Track Duration
 	</th>
+		<th class="deleteColumn">
+		Delete track
+	</th>
 	</tr>
 		<tr th:each="row : ${tracks}"> 
 	    	<td class="tg bg" th:text="${row.key}"></td> 
 	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
-	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
+	    	<td class="tg bg trackid" th:text="${row.value[1]}"></td>
+	    	<input type="hidden" id="trackid" name="hidden" th:value="${row.value[2]}"/>
+	    	<td class="deleteColumn"><button type="button">Delete from Playlist</button></td>
 		</tr>
 	 </table>
 </body>

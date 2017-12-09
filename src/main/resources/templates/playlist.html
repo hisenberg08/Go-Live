@@ -44,7 +44,7 @@
 		<tr th:each="row : ${playListData[0]}"> 
 		<td class="tg bg" th:text="${row.key}"></td> 
 		    <td>
-	    		<form action="/playlist/getTracks" method="post">               
+	    		<form action="/getTracks" method="post">               
 					<input class="dashbtn" type="submit" name="playlistName" th:value="${row.value[0]}"/>
 					<input type="hidden" name="playlistid" th:value="${row.value[1]}"/>
 					<input type="hidden" name="playlistowner" th:value="${user}"/>
@@ -69,7 +69,7 @@
 		<tr th:each="row : ${playListData[1]}"> 
 		<td class="tg bg" th:text="${row.key}"></td> 
 		    <td>
-	    		<form action="/playlist/getTracks" method="post">               
+	    		<form action="/getTracks" method="post">               
 					<input class="dashbtn" type="submit" name="playlistName" th:value="${row.value[0]}"/>
 					<input type="hidden" name="playlistid" th:value="${row.value[1]}"/>
 					<input type="hidden" name="playlistowner" th:value="${row.value[2]}"/>
@@ -83,7 +83,7 @@
 
 <div id = "createPlaylistForm" class="tabcontent">
 	 <h2>Create New PlayList</h2>
-      	<form class="signup" action="/playlist/createnew" method="post">
+      	<form class="signup" action="/createnew" method="post">
             <div>
              <input type="hidden" name="hidden" th:value="${user}"/>
              <input type="text" placeholder="playlistName" name="playlistName" required="required"/><br/><br/>
