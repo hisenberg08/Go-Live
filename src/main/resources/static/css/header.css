@@ -5,7 +5,6 @@
 }
 
 .headerdiv{
-	float: right;
 	padding-right:25px;
 	padding-top: 10px;
 }
@@ -18,7 +17,7 @@
 	
 	background:none!important;
     border:none; 
-    padding:0!important;
+    /* padding:0!important; */
     
     /*optional*/
     font-family:arial,sans-serif; /*input has OS specific font-family*/
@@ -26,7 +25,18 @@
     text-decoration:underline;
     cursor:pointer;
     font-size: 20px;
-    float: right;
+    /* float: right; */
 	padding-right:25px;
 	padding-top: 10px;
 }
+
+.homeDiv{
+	float: right;
+    padding-right: 30px;
+}
+
+.logoutDiv{
+	float: right;
+    padding-right: 20px;
+}
+

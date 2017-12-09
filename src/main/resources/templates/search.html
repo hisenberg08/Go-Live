@@ -63,12 +63,12 @@ div.tab button.active {
 <body>
 <div class="header">
 	<div class="headertext"><h1>Go Live!!</h1></div>
-	<div class="headerdiv">
+	<div class="homeDiv">
 	<form action="/home" method="post">               
 		<input class="headerbutton" type="submit" value="Home"/>
 		<input type="hidden" id="hidden" name="hidden" th:value="${user}"/>
 	</form></div>
-	<div class="headerdivs">
+	<div class="logoutDiv">
 	<form action="/logout" method="post">               
 		<input class="headerbutton" type="submit" value="Logout"/>
 		<input type="hidden" name="hidden" th:value="${user}"/>

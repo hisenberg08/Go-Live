@@ -153,8 +153,9 @@ public class SimpleController {
 		if (activeUsers.contains(userName)) {
 			int status = playList.createNewPlayList(userName, playlistCategory, playlistName);
 			model.put("user", userName);
+			model.put("news",dashRepo.getNewsFeed());
 			if (status == 1)
-				return "searchTrackPage";
+				return "welcome";
 			else
 				return "errorPage";
 		} else
