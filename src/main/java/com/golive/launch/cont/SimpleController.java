@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.golive.launch.entity.UserDetails;
+import com.golive.launch.repo.AlbumRepo;
 import com.golive.launch.repo.ArtistRepo;
 import com.golive.launch.repo.DashboardRepo;
 import com.golive.launch.repo.LoginRepo;
@@ -38,6 +39,9 @@ public class SimpleController {
 
 	@Autowired
 	ArtistRepo artistRepo;
+
+	@Autowired
+	AlbumRepo albumRepo;
 
 	@Autowired
 	UserRepo userRepo;
@@ -226,6 +230,17 @@ public class SimpleController {
 				model.put("playListData", playList.getUserPlayList(userName));
 
 				return "displayArtistTracks";
+			} else if (tracksFor.equals("album")) {
+				String albumId = request.getParameter("albumId");
+				String albumName = request.getParameter("albumName");
+
+				model.put("tracks", albumRepo.getTracksforAlbum(albumId));
+				model.put("user", userName);
+				model.put("albumId", albumId);
+				model.put("albumName", albumName);
+				model.put("playListData", playList.getUserPlayList(userName));
+
+				return "displayAlbumTracks";
 			}
 
 			return "errorPage";

@@ -178,9 +178,9 @@ div.tab button.active {
 	<th>
 		Sr.No
 	</th>
-	<th>
-		Album ID
-	</th>
+<!-- 	<th> -->
+<!-- 		Album ID -->
+<!-- 	</th> -->
 	<th>
 		Album Title
 	</th>
@@ -190,8 +190,17 @@ div.tab button.active {
 	</tr>
 		<tr th:each="row : ${searchData[2]}"> 
 	    	<td class="tg bg" th:text="${row.key}"></td> 
-	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
-	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
+<!-- 	    	<td class="tg bg" th:text="${row.value[0]}"></td>   -->
+			<td> 
+				<form action="/getTracks" method="post">  
+		    		<input class="dashbtn" type="submit" name="albumName" th:value="${row.value[1]}"/>  
+		    		<input type="hidden" name="albumId" th:value="${row.value[0]}"/>  
+		    		<input type="hidden" name="albumName" th:value="${row.value[1]}"/>
+			   	 	<input type="hidden" name="type" th:value="album"/>
+			   	 	<input type="hidden" name="hidden" th:value="${user}"/>
+			    </form>  
+	    	</td> 
+<!-- 	    	<td class="tg bg" th:text="${row.value[1]}"></td>   -->
 	    	<td class="tg bg" th:text="${row.value[2]}"></td>  
 		</tr>
 	 </table>
@@ -216,7 +225,6 @@ div.tab button.active {
 	    	<td class="tg bg" th:text="${row.key}"></td> 
 	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
-<!-- 	    	<td class="tg bg" th:text="${row.value[2]}"></td>   -->
 			<td>
 	    			<input type="hidden" class="userId" name="userId" th:value="${row.value[0]}"/>
 	    			<input type="hidden" class="followCheck" name="followCheck" th:value="${row.value[2]}"/>

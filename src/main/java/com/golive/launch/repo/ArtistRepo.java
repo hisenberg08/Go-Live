@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,7 +30,12 @@ public class ArtistRepo {
 		for (Map<String, Object> result : artistTracks) {
 			List<String> artistTrackRecord = new ArrayList<String>();
 			artistTrackRecord.add(result.get("tracktitle").toString());
-			artistTrackRecord.add(result.get("trackduration").toString());
+			// artistTrackRecord.add(result.get("trackduration").toString());
+			String minutes = String
+					.valueOf(TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(result.get("trackduration").toString())));
+			String seconds = String
+					.valueOf(TimeUnit.MILLISECONDS.toSeconds(Long.parseLong(result.get("trackduration").toString())));
+			artistTrackRecord.add(minutes + " min " + seconds + " sec");
 			artistTrackRecord.add(result.get("trackid").toString());
 			artistTrackMap.put(i, artistTrackRecord);
 			i++;

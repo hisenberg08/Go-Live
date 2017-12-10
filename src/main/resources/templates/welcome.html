@@ -67,7 +67,6 @@ window.attachEvent("onload", initializemarquee)
 else if (document.getElementById)
 window.onload=initializemarquee
 
-
 </script>
 
 
@@ -92,7 +91,7 @@ window.onload=initializemarquee
 	<p class="welcomeuser" th:text="'Welcome '+${user}+'!!!'"></p>
 		<div>
 			<form action="/search" method="post">
-					<input type="text" class = "useraction" name="searchInput" placeholder="Search Bar" required="required"/>
+					<input type="text" class = "useraction" name="searchInput" placeholder="Search Bar" id="searchInput" required="required"/>
 					<input type="hidden" name="hidden" th:value="${user}"/>
 					<input class="dashbtn" type="submit" value="Search"/>
 			</form>

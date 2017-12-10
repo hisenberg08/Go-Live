@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -79,7 +80,12 @@ public class PlayListRepo {
 		for (Map<String, Object> result : playlistTrack) {
 			List<String> userPlaylistRecord = new ArrayList<String>();
 			userPlaylistRecord.add(result.get("tracktitle").toString());
-			userPlaylistRecord.add(result.get("trackduration").toString());
+			// userPlaylistRecord.add(result.get("trackduration").toString());
+			String minutes = String
+					.valueOf(TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(result.get("trackduration").toString())));
+			String seconds = String
+					.valueOf(TimeUnit.MILLISECONDS.toSeconds(Long.parseLong(result.get("trackduration").toString())));
+			userPlaylistRecord.add(minutes + " min " + seconds + " sec");
 			userPlaylistRecord.add(result.get("trackid").toString());
 			playlsitTrackMap.put(i, userPlaylistRecord);
 			i++;
@@ -104,14 +110,14 @@ public class PlayListRepo {
 	}
 
 	public int deletePlaylist(int playlistid) {
-		
+
 		String deletePlaylistTrack = "delete from playlisttrack where playlistid = ?";
 		String deletePlaylist = "delete from playlist where playlistid = ?";
-		int status =0;
-		try{
-			jdbctempplate.update(deletePlaylistTrack,playlistid);
-			status =jdbctempplate.update(deletePlaylist,playlistid);
-		}catch(Exception e){
+		int status = 0;
+		try {
+			jdbctempplate.update(deletePlaylistTrack, playlistid);
+			status = jdbctempplate.update(deletePlaylist, playlistid);
+		} catch (Exception e) {
 			return 0;
 		}
 		return status;

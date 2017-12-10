@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,7 +40,11 @@ public class SearchRepo {
 			List<String> trackRecord = new ArrayList<String>();
 			trackRecord.add(trackResult.get("trackid").toString());
 			trackRecord.add(trackResult.get("tracktitle").toString());
-			trackRecord.add(trackResult.get("trackduration").toString());
+			String minutes = String.valueOf(
+					TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(trackResult.get("trackduration").toString())));
+			String seconds = String.valueOf(
+					TimeUnit.MILLISECONDS.toSeconds(Long.parseLong(trackResult.get("trackduration").toString())));
+			trackRecord.add(minutes + " min " + seconds + " sec");
 			trackResultMap.put(i, trackRecord);
 			i++;
 		}
