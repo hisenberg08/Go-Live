@@ -247,35 +247,34 @@ public class SimpleController {
 		} else
 			return "errorPage";
 	}
-	
+
 	@RequestMapping("/tracksForMood")
 	public String tracksForMood(HttpServletRequest request, Map<String, Object> model) {
-		
+
 		String username = request.getParameter("username");
-		String mood = request.getParameter("mood");
-		
-		if(activeUsers.contains(username)){
-			
+		String mood = request.getParameter("selectMood");
+
+		if (activeUsers.contains(username)) {
+
 			model.put("mood", mood);
 			model.put("tracks", search.getMoodBasedTracks(mood));
 			model.put("user", username);
 			return "displayMoodTracks";
-		}else
+		} else
 			return "errorPage";
 	}
-	
+
 	@RequestMapping("/userHistory")
-	public String getUserHistory(HttpServletRequest request, Map<String, Object> model){
-		
+	public String getUserHistory(HttpServletRequest request, Map<String, Object> model) {
+
 		String username = request.getParameter("hidden");
-		if(activeUsers.contains(username)){
-			
+		if (activeUsers.contains(username)) {
+
 			model.put("user", username);
 			model.put("history", userRepo.getUserHistory(username));
-			
+
 			return "displayUserHistory";
-		}
-		else
+		} else
 			return "errorPage";
 	}
 }

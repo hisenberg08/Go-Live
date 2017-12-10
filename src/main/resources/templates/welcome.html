@@ -118,10 +118,10 @@ window.onload=initializemarquee
 					
 					<form action="/tracksForMood" method="post">
 					<input type="hidden" name="username" th:value="${user}"/>
-					<select id="selectMood" class="selectMood" style = "width: 30%">
+					<select name="selectMood" id="selectMood" class="selectMood" style = "width: 30%">
 						<option value="blank"></option>
 	    				<th:block th:each="row : ${news['mood']}">
-	    				<option th:value="${row}" th:text ="${row}" th:feild="mood"></option>
+	    				<option th:value="${row}" th:text ="${row}"></option>
 	    				</th:block>
 					</select>
 					<input type="submit"/>

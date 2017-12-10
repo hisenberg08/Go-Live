@@ -89,13 +89,13 @@ public class SearchRepo {
 	}
 
 	public Map<Integer, List<String>> getMoodBasedTracks(String mood) {
-		
-		String getTracksForMood = "select t.tracktitle,t.trackduration from trackgenre tg left join track t on t.trackid =tg.trackid where tg.genre = ?";
-		
+
+		String getTracksForMood = "select t.tracktitle,t.trackduration from trackgenre tg left join track t on t.trackid =tg.trackid left join genremood g on tg.genre=g.genre where g.mood =?";
+
 		List<Map<String, Object>> moodTrack = jdbctempplate.queryForList(getTracksForMood, mood);
 		Map<Integer, List<String>> resultMoodTracks = new HashMap<Integer, List<String>>();
 		int i = 1;
-		
+
 		for (Map<String, Object> trackResult : moodTrack) {
 			List<String> moodTracks = new ArrayList<String>();
 			moodTracks.add(trackResult.get("tracktitle").toString());
