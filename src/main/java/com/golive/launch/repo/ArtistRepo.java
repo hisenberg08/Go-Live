@@ -18,6 +18,8 @@ public class ArtistRepo {
 
 	private String getTracksforArtistQuery = "select t.trackid,t.tracktitle,t.trackduration from trackartist ta left join track t on ta.trackid = t.trackid where ta.artistid = ?";
 	private String getLikedArtistsQuery = "select ua.artistid from userlikeartist ua where ua.username=?";
+	private String addLikeArtistQuery = "Insert into userlikeartist (username, artistid, likedtv) values (?,?,now()) on DUPLICATE KEY UPDATE likedtv=now()";
+	private String removeLikeArtistQuery = "delete from userlikeartist where username=? and artistid=?";
 
 	public Map<Integer, List<String>> getTracksforArtist(String artistId) {
 
@@ -42,5 +44,23 @@ public class ArtistRepo {
 			likedArtistsSet.add(result.get("artistid").toString());
 		}
 		return likedArtistsSet;
+	}
+
+	public int addLikeArtist(String userName, String artistId) {
+		int rate = 0;
+		rate = jdbctempplate.update(addLikeArtistQuery, userName, artistId);
+		if (rate == 1)
+			return rate;
+		else
+			return 0;
+	}
+
+	public int removeLikeArtist(String userName, String artistId) {
+		int rate = 0;
+		rate = jdbctempplate.update(removeLikeArtistQuery, userName, artistId);
+		if (rate == 1)
+			return rate;
+		else
+			return 0;
 	}
 }

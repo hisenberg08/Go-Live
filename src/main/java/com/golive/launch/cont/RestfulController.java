@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.golive.launch.repo.ArtistRepo;
 import com.golive.launch.repo.PlayListRepo;
 import com.golive.launch.repo.RatingRepo;
 
@@ -21,6 +22,9 @@ public class RestfulController {
 
 	@Autowired
 	RatingRepo ratingrepo;
+
+	@Autowired
+	ArtistRepo artistRepo;
 
 	@Autowired
 	PlayListRepo playListRepo;
@@ -58,13 +62,27 @@ public class RestfulController {
 		int res = playListRepo.addTrackInPlaylist(playListId, trackId);
 		return res;
 	}
-	
+
 	@RequestMapping("/deletePlaylist")
-	public void deletePlaylist(HttpServletRequest request){
-		
+	public void deletePlaylist(HttpServletRequest request) {
+
 		int playlistid = Integer.parseInt(request.getParameter("playlistId"));
 		playListRepo.deletePlaylist(playlistid);
-		
+
+	}
+
+	@RequestMapping(value = "/addLikeArtist", method = RequestMethod.POST)
+	public int addLikeArtist(HttpServletRequest request) {
+		String userName = request.getParameter("username");
+		String artistId = request.getParameter("artistId");
+		return artistRepo.addLikeArtist(userName, artistId);
+	}
+
+	@RequestMapping(value = "/removeLikeArtist", method = RequestMethod.POST)
+	public int removeLikeArtist(HttpServletRequest request) {
+		String userName = request.getParameter("username");
+		String artistId = request.getParameter("artistId");
+		return artistRepo.removeLikeArtist(userName, artistId);
 	}
 
 }
