@@ -1,5 +1,7 @@
 package com.golive.launch.repo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -43,5 +45,23 @@ public class UserRepo {
 			return result;
 		else
 			return 0;
+	}
+
+	public Map<Integer, List<String>> getUserHistory(String username) {
+		
+		String lastFivePlayedTracks = "select t.tracktitle,p.playeddtv from plays p left join track t on t.trackid =p.trackid where p.username = ? limit 10";
+		
+		List<Map<String, Object>> lastPlayedTracksresult = jdbctempplate.queryForList(lastFivePlayedTracks,username);
+		Map<Integer, List<String>> historyMap = new HashMap<>();
+		
+		int i=1;
+		for (Map<String, Object> result : lastPlayedTracksresult) {
+			List<String> histList = new ArrayList<>();
+			histList.add(result.get("tracktitle").toString());
+			histList.add(result.get("playeddtv").toString());
+			historyMap.put(i,histList);
+			i++;
+		}
+		return historyMap;
 	}
 }

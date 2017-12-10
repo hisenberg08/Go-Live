@@ -73,7 +73,10 @@ public class PlayListRepo {
 
 		String getTrackForPlayList = "select t.trackid,t.tracktitle,t.trackduration from playlisttrack p left join track t "
 				+ "on p.trackid = t.trackid where playlistid = ?";
-
+		
+		String updatePlaylistViews ="UPDATE playlist SET playlistviews = playlistviews + 1 WHERE playlistid = ?";
+		jdbctempplate.update(updatePlaylistViews,playlistId);
+		
 		List<Map<String, Object>> playlistTrack = jdbctempplate.queryForList(getTrackForPlayList, playlistId);
 		Map<Integer, List<String>> playlsitTrackMap = new HashMap<Integer, List<String>>();
 		int i = 1;

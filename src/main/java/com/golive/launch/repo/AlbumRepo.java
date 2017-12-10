@@ -17,9 +17,12 @@ public class AlbumRepo {
 	private JdbcTemplate jdbctempplate;
 
 	private String getTracksforAlbumQuery = "select t.albumpos,t.trackid,t.tracktitle,t.trackduration from track t where t.albumid = ? ORDER BY t.albumpos ASC";
-
+	private String updateAlbumViews = "UPDATE album SET albumviews = albumviews + 1 WHERE albumid = ?";
+	
 	public Map<Integer, List<String>> getTracksforAlbum(String albumId) {
 
+		jdbctempplate.update(updateAlbumViews,albumId);
+		
 		List<Map<String, Object>> albumTracks = jdbctempplate.queryForList(getTracksforAlbumQuery, albumId);
 		Map<Integer, List<String>> albumTrackMap = new HashMap<Integer, List<String>>();
 		int i = 1;
