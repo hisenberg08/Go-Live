@@ -21,6 +21,7 @@ import com.golive.launch.repo.LoginRepo;
 import com.golive.launch.repo.PlayListRepo;
 import com.golive.launch.repo.SaveUserInfo;
 import com.golive.launch.repo.SearchRepo;
+import com.golive.launch.repo.UserRepo;
 
 @Controller
 @ComponentScan(basePackages = "com.golive.launch.view")
@@ -39,8 +40,11 @@ public class SimpleController {
 	ArtistRepo artistRepo;
 
 	@Autowired
+	UserRepo userRepo;
+
+	@Autowired
 	SearchRepo search;
-	
+
 	@Autowired
 	DashboardRepo dashRepo;
 
@@ -63,7 +67,7 @@ public class SimpleController {
 
 			model.put("user", userName);
 			activeUsers.add(userName);
-			model.put("news",dashRepo.getNewsFeed());
+			model.put("news", dashRepo.getNewsFeed());
 			return "welcome";
 		} else
 			return "login";
@@ -115,7 +119,7 @@ public class SimpleController {
 		String searchFor = request.getParameter("searchInput");
 		if (activeUsers.contains(userName)) {
 
-			List<Map<Integer, List<String>>> results = search.searchAll("%" + searchFor + "%");
+			List<Map<Integer, List<String>>> results = search.searchAll("%" + searchFor + "%", userName);
 			HashSet<String> likedArtists = artistRepo.getLikedArtists(userName);
 			Map<Integer, List<String>> artistResultMap = results.get(1);
 			for (int i = 1; i <= artistResultMap.size(); i++) {
@@ -125,6 +129,18 @@ public class SimpleController {
 					artistRecord.add("Y");
 				} else {
 					artistRecord.add("N");
+				}
+			}
+
+			HashSet<String> followedUsers = userRepo.getFollowedUsers(userName);
+			Map<Integer, List<String>> userResultMap = results.get(3);
+			for (int i = 1; i <= userResultMap.size(); i++) {
+				List<String> userRecord = userResultMap.get(i);
+				String userRecordId = userRecord.get(0);
+				if (followedUsers.contains(userRecordId)) {
+					userRecord.add("Y");
+				} else {
+					userRecord.add("N");
 				}
 			}
 			model.put("searchData", results);
@@ -141,7 +157,7 @@ public class SimpleController {
 		String userName = request.getParameter("hidden");
 		if (activeUsers.contains(userName)) {
 			model.put("user", userName);
-			model.put("news",dashRepo.getNewsFeed());
+			model.put("news", dashRepo.getNewsFeed());
 			return "welcome";
 		} else
 			return "errorPage";
@@ -167,7 +183,7 @@ public class SimpleController {
 		if (activeUsers.contains(userName)) {
 			int status = playList.createNewPlayList(userName, playlistCategory, playlistName);
 			model.put("user", userName);
-			model.put("news",dashRepo.getNewsFeed());
+			model.put("news", dashRepo.getNewsFeed());
 			if (status == 1)
 				return "welcome";
 			else

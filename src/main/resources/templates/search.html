@@ -9,6 +9,7 @@
 <script th:inline="javascript" src ="js/tab.js"></script>
 <script th:inline="javascript" src ="js/dropdownselect.js"></script>
 <script th:inline="javascript" src ="js/likeSelect.js"></script>
+<script th:inline="javascript" src ="js/followSelect.js"></script>
 <style>
 body {font-family: Arial;}
 
@@ -84,6 +85,7 @@ div.tab button.active {
   <button class="tablinks" onclick="openSearch(event, 'Tracks')">Tracks</button>
   <button class="tablinks" onclick="openSearch(event, 'Artists')">Artists</button>
   <button class="tablinks" onclick="openSearch(event, 'Albums')">Albums</button>
+  <button class="tablinks" onclick="openSearch(event, 'Users')">Users</button>
 </div>
 
 <div id="Tracks" class="tabcontent" style="display:block">
@@ -191,6 +193,35 @@ div.tab button.active {
 	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[2]}"></td>  
+		</tr>
+	 </table>
+</div>
+<div id="Users" class="tabcontent">
+	<table style="width:100%" border="1">
+	<tr height="50">
+	<th>
+		Sr.No
+	</th>
+	<th>
+		userName
+	</th>
+	<th>
+		Full Name
+	</th>
+	<th>
+		Follow
+	</th>
+	</tr>
+		<tr th:each="row : ${searchData[3]}"> 
+	    	<td class="tg bg" th:text="${row.key}"></td> 
+	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
+	    	<td class="tg bg" th:text="${row.value[1]}"></td>  
+<!-- 	    	<td class="tg bg" th:text="${row.value[2]}"></td>   -->
+			<td>
+	    			<input type="hidden" class="userId" name="userId" th:value="${row.value[0]}"/>
+	    			<input type="hidden" class="followCheck" name="followCheck" th:value="${row.value[2]}"/>
+	    			<input type="checkbox" id="isFollowed" name="isFollowed" class="isFollowed"/>
+	    	</td>
 		</tr>
 	 </table>
 </div>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.golive.launch.repo.ArtistRepo;
 import com.golive.launch.repo.PlayListRepo;
 import com.golive.launch.repo.RatingRepo;
+import com.golive.launch.repo.UserRepo;
 
 @RestController
 @ComponentScan(basePackages = "com.golive.launch.view")
@@ -25,6 +26,9 @@ public class RestfulController {
 
 	@Autowired
 	ArtistRepo artistRepo;
+
+	@Autowired
+	UserRepo userRepo;
 
 	@Autowired
 	PlayListRepo playListRepo;
@@ -83,6 +87,20 @@ public class RestfulController {
 		String userName = request.getParameter("username");
 		String artistId = request.getParameter("artistId");
 		return artistRepo.removeLikeArtist(userName, artistId);
+	}
+
+	@RequestMapping(value = "/followUser", method = RequestMethod.POST)
+	public int followUser(HttpServletRequest request) {
+		String userName = request.getParameter("username");
+		String toFollowUser = request.getParameter("userId");
+		return userRepo.followUser(userName, toFollowUser);
+	}
+
+	@RequestMapping(value = "/unfollowUser", method = RequestMethod.POST)
+	public int unfollowUser(HttpServletRequest request) {
+		String userName = request.getParameter("username");
+		String toUnFollowUser = request.getParameter("userId");
+		return userRepo.unfollowUser(userName, toUnFollowUser);
 	}
 
 }

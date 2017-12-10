@@ -15,20 +15,23 @@ public class SearchRepo {
 	@Autowired
 	private JdbcTemplate jdbctempplate;
 
-	public List<Map<Integer, List<String>>> searchAll(String searchFor) {
+	public List<Map<Integer, List<String>>> searchAll(String searchFor, String userName) {
 		List<Map<Integer, List<String>>> results = new ArrayList<Map<Integer, List<String>>>();
 
 		String trackQuery = "select trackid, tracktitle, trackduration from track where tracktitle LIKE ?";
 		String artistQuery = "select artistid, artistname, artistdesc from artist where artistname LIKE ?";
 		String albumQuery = "select albumid, albumtitle, albumreleasedate from album where albumtitle LIKE ?";
+		String usersQuery = "select u.username, u.name from userdata u where (u.username LIKE ? or u.name LIKE ?) and u.username != ?";
 
 		Map<Integer, List<String>> trackResultMap = new HashMap<Integer, List<String>>();
 		Map<Integer, List<String>> artistResultMap = new HashMap<Integer, List<String>>();
 		Map<Integer, List<String>> albumResultMap = new HashMap<Integer, List<String>>();
+		Map<Integer, List<String>> usersResultMap = new HashMap<Integer, List<String>>();
 
 		List<Map<String, Object>> trackResults = jdbctempplate.queryForList(trackQuery, searchFor);
 		List<Map<String, Object>> artistResults = jdbctempplate.queryForList(artistQuery, searchFor);
 		List<Map<String, Object>> albumResults = jdbctempplate.queryForList(albumQuery, searchFor);
+		List<Map<String, Object>> userResults = jdbctempplate.queryForList(usersQuery, searchFor, searchFor, userName);
 
 		int i = 1;
 		// mapping result from track fetch query into HashMap
@@ -63,9 +66,20 @@ public class SearchRepo {
 			i++;
 		}
 
+		i = 1;
+		// mapping result from Users fetch query into HashMap
+		for (Map<String, Object> userResult : userResults) {
+			List<String> userRecord = new ArrayList<String>();
+			userRecord.add(userResult.get("username").toString());
+			userRecord.add(userResult.get("name").toString());
+			usersResultMap.put(i, userRecord);
+			i++;
+		}
+
 		results.add(trackResultMap);
 		results.add(artistResultMap);
 		results.add(albumResultMap);
+		results.add(usersResultMap);
 		return results;
 	}
 
