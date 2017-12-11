@@ -9,24 +9,24 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class LoginRepo {
-	
-	private String validateUser = "select password from userdata where username = ?";
-	
+
+	private String validateUserNew = "select username from userdata where username = ? and password = PASSWORD(?);";
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	public boolean validateUser(String userName,String pass){
-		
+
+	public boolean validateUser(String userName, String pass) {
+
 		Boolean validate = false;
-		List<Map<String,Object>> user = jdbcTemplate.queryForList(validateUser,userName);
-		if (user!=null && !user.isEmpty()) {
+		List<Map<String, Object>> user = jdbcTemplate.queryForList(validateUserNew, userName, pass);
+		if (user != null && !user.isEmpty()) {
 			for (Map<String, Object> userDetail : user) {
-				if(userDetail.get("password").toString().equals(pass))
+				if (userDetail.get("username").toString().equals(userName))
 					validate = true;
 			}
-			
+
 		}
 		return validate;
 	}
-	
+
 }
