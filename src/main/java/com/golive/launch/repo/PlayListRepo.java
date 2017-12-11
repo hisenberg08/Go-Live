@@ -73,10 +73,10 @@ public class PlayListRepo {
 
 		String getTrackForPlayList = "select t.trackid,t.tracktitle,t.trackduration from playlisttrack p left join track t "
 				+ "on p.trackid = t.trackid where playlistid = ?";
-		
-		String updatePlaylistViews ="UPDATE playlist SET playlistviews = playlistviews + 1 WHERE playlistid = ?";
-		jdbctempplate.update(updatePlaylistViews,playlistId);
-		
+
+		String updatePlaylistViews = "UPDATE playlist SET playlistviews = playlistviews + 1 WHERE playlistid = ?";
+		jdbctempplate.update(updatePlaylistViews, playlistId);
+
 		List<Map<String, Object>> playlistTrack = jdbctempplate.queryForList(getTrackForPlayList, playlistId);
 		Map<Integer, List<String>> playlsitTrackMap = new HashMap<Integer, List<String>>();
 		int i = 1;
@@ -114,11 +114,9 @@ public class PlayListRepo {
 
 	public int deletePlaylist(int playlistid) {
 
-		String deletePlaylistTrack = "delete from playlisttrack where playlistid = ?";
 		String deletePlaylist = "delete from playlist where playlistid = ?";
 		int status = 0;
 		try {
-			jdbctempplate.update(deletePlaylistTrack, playlistid);
 			status = jdbctempplate.update(deletePlaylist, playlistid);
 		} catch (Exception e) {
 			return 0;
