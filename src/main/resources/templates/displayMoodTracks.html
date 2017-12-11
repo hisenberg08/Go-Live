@@ -5,6 +5,10 @@
 <link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/dashboard.css}" rel="stylesheet" type="text/css"/>
 <link th:href="@{/css/header.css}" rel="stylesheet" type="text/css"/>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script th:inline="javascript" src ="js/updateplays.js"></script>
+
 </head>
 <body>
 <div class="header">
@@ -22,7 +26,7 @@
 		<input type="hidden" name="hidden" th:value="${user}"/>
 	</form></div>
 </div>
-<input type="hidden" id ="source" name="source" th:value="tracks"/>
+<input type="hidden" id ="source" name="source" th:value="track"/>
 	<table style="width:70%" border="1">
 	<tr height="50">
 	<th>
@@ -34,12 +38,16 @@
 	<th>
 		Track Duration
 	</th>
+	<th>
+		play Track
+	</th>
 	</tr>
 		<tr th:each="row : ${tracks}"> 
 	    	<td class="tg bg" th:text="${row.key}"></td> 
 	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
-	    	<td class="tg bg trackid" th:text="${row.value[1]}"></td>
-	    	<td><input type="submit" value="Submit" class="trackPlayed"></td>
+	    	<td class="tg bg" th:text="${row.value[1]}"></td>
+	    	<input type="hidden" id="trackid" th:value="${row.value[2]}"/>
+	    	<td><input type="submit" value="Play" class="trackPlayed"/></td>
 		</tr>
 	 </table>
 </body>

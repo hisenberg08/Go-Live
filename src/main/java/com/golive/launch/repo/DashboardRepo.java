@@ -25,6 +25,7 @@ public class DashboardRepo {
 		List<String> highestRatedTrack = new ArrayList<>();
 		List<String> mostHeardPlaylist = new ArrayList<>();
 		List<String> mostHeardAlbum = new ArrayList<>();
+		List<String> mostPlayedPlaylist = new ArrayList<>();
 		
 		
 		
@@ -43,6 +44,8 @@ public class DashboardRepo {
 		String getMostHeardAlbum ="select albumtitle from album order by albumviews desc limit 3";
 		
 		String getMostHeardPlaylist ="select playlistname,playlistowner from playlist order by playlistviews desc limit 3";
+		
+		String getMostplayedPlaylist ="select p.playlistname, p.playlistowner from playlisttrack pt left join playlist p on pt.playlistid=p.playlistid group by pt.playlistid order by  min(pt.playedcount) desc limit 3";
 		
 		
 		//top artist
@@ -94,6 +97,13 @@ public class DashboardRepo {
 			mostHeardAlbum.add(result.get("albumtitle").toString());
 		}
 		newsFeed.put("mostHeardAlbum", mostHeardAlbum);
+		
+		//listing most heard album
+		List<Map<String, Object>> mostplayedPlaylists = jdbctemplate.queryForList(getMostplayedPlaylist);
+		for (Map<String, Object> result : mostplayedPlaylists) {
+			mostPlayedPlaylist.add(result.get("playlistname").toString() + " - " + result.get("playlistowner").toString());
+		}
+		newsFeed.put("mostPlayedPlaylist", mostPlayedPlaylist);
 		
 		return newsFeed;
 		

@@ -13,6 +13,7 @@ $(document).ready(function() {
 		 var user = $('#user').val();
 		 var trackid = $(this).parent().siblings('#trackid').val();
 		 $(this).attr('disabled',true);
+		 $(this).parent().parent().find('#deletePlay').attr('disabled',true);
 		 $.ajax({
 	            url: "/deleteTrackFromplaylist",
 	            type: "POST",

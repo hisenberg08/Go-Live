@@ -49,7 +49,8 @@ public class UserRepo {
 
 	public Map<Integer, List<String>> getUserHistory(String username) {
 		
-		String lastFivePlayedTracks = "select t.tracktitle,p.playeddtv,t.trackid from plays p left join track t on t.trackid =p.trackid where p.username = ? limit 10";
+		String lastFivePlayedTracks = "select t.tracktitle,p.playeddtv,t.trackid from plays p left join track t "
+				+ "on t.trackid =p.trackid where p.username = ? order by p.playeddtv desc limit 10";
 		
 		List<Map<String, Object>> lastPlayedTracksresult = jdbctempplate.queryForList(lastFivePlayedTracks,username);
 		Map<Integer, List<String>> historyMap = new HashMap<>();
@@ -66,10 +67,18 @@ public class UserRepo {
 		return historyMap;
 	}
 
-	public int userPlayTrack(String source, String user, String trackId) {
+	public int userPlayTrack(String source, String user, String trackId, String playlistId) {
 		
 		String songPlayedQuery = "insert into plays (username,trackid,source,playeddtv) values (?,?,?,now())";
 		int status = jdbctempplate.update(songPlayedQuery,user,trackId,source);
+		
+		if(source.equals("playlist")){
+			String incPlaylistPlayedCount = "UPDATE playlisttrack SET playedcount = playedcount + 1 WHERE playlistid = ? and trackid = ?";
+			if(jdbctempplate.update(incPlaylistPlayedCount,playlistId,trackId)>0)
+				return 1;
+			else
+				return 0;
+		}
 		return status;
 	}
 }

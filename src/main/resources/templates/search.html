@@ -10,6 +10,7 @@
 <script th:inline="javascript" src ="js/dropdownselect.js"></script>
 <script th:inline="javascript" src ="js/likeSelect.js"></script>
 <script th:inline="javascript" src ="js/followSelect.js"></script>
+<script th:inline="javascript" src ="js/updateplays.js"></script>
 <style>
 body {font-family: Arial;}
 
@@ -80,13 +81,14 @@ div.tab button.active {
 </div>
 <div><h1><center>Search Results</center></h1></div>
 <br></br>
-<input type="hidden" id ="source" name="source" th:value="tracks"/>
+<input type="hidden" id ="source" name="source" th:value="track"/>
 <div class="tab">
   <button class="tablinks" onclick="openSearch(event, 'Tracks')">Tracks</button>
   <button class="tablinks" onclick="openSearch(event, 'Artists')">Artists</button>
   <button class="tablinks" onclick="openSearch(event, 'Albums')">Albums</button>
   <button class="tablinks" onclick="openSearch(event, 'Users')">Users</button>
 </div>
+<input type="hidden" id= "user" name="hidden" th:value="${user}"/>
 
 <div id="Tracks" class="tabcontent" style="display:block">
 	<table style="width:100%" border="1">
@@ -105,6 +107,9 @@ div.tab button.active {
 	</th>
 	<th>
 		Rate this Track
+	</th>
+	<th>
+		play Track
 	</th>
 	</tr>
 		<tr th:each="row : ${searchData[0]}"> 
@@ -129,7 +134,9 @@ div.tab button.active {
 	    		<option value="4">4</option>
 	    		<option value="5">5</option>
 	    	</select>
-	    	</td>  
+	    	</td>
+	    	<input type="hidden" id="trackid" th:value="${row.value[0]}"/>
+	    	<td><input type="submit" value="Play" class="trackPlayed"/></td>    
 		</tr>
 	 </table>
 </div>

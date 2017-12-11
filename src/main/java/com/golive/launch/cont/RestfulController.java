@@ -108,8 +108,9 @@ public class RestfulController {
 		String source = request.getParameter("source");
 		String user = request.getParameter("user");
 		String trackId = request.getParameter("trackId");
+		String playlistId = request.getParameter("playlistId");
 		
-	return userRepo.userPlayTrack(source,user,trackId);
+	return userRepo.userPlayTrack(source,user,trackId,playlistId);
 	}
 	
 }

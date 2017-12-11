@@ -90,7 +90,7 @@ public class SearchRepo {
 
 	public Map<Integer, List<String>> getMoodBasedTracks(String mood) {
 
-		String getTracksForMood = "select t.tracktitle,t.trackduration from trackgenre tg left join track t on t.trackid =tg.trackid left join genremood g on tg.genre=g.genre where g.mood =?";
+		String getTracksForMood = "select t.tracktitle,t.trackduration,t.trackid from trackgenre tg left join track t on t.trackid =tg.trackid left join genremood g on tg.genre=g.genre where g.mood =?";
 
 		List<Map<String, Object>> moodTrack = jdbctempplate.queryForList(getTracksForMood, mood);
 		Map<Integer, List<String>> resultMoodTracks = new HashMap<Integer, List<String>>();
@@ -104,6 +104,7 @@ public class SearchRepo {
 			String seconds = String.valueOf(
 					TimeUnit.MILLISECONDS.toSeconds(Long.parseLong(trackResult.get("trackduration").toString())));
 			moodTracks.add(minutes + " min " + seconds + " sec");
+			moodTracks.add(trackResult.get("trackid").toString());
 			resultMoodTracks.put(i, moodTracks);
 			i++;
 		}

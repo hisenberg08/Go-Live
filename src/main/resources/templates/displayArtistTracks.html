@@ -8,6 +8,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script th:inline="javascript" src ="js/tab.js"></script>
 <script th:inline="javascript" src ="js/dropdownselect.js"></script>
+<script th:inline="javascript" src ="js/updateplays.js"></script>
+
 </head>
 <body>
 <div class="header">
@@ -28,6 +30,7 @@
 <input type="hidden" id="artistId" name="artistId" th:value="${artistId}"/>
 <h1><p th:text="'Artist Name:- '+${artistName}"></p></h1>
 <input type="hidden" id ="source" name="source" th:value="artist"/>
+<input type="hidden" id="user" name="hidden" th:value="${user}"/>
 <table style="width:100%" border="1">
 	<tr height="50">
 	<th>
@@ -44,6 +47,9 @@
 	</th>
 	<th>
 		Rate this Track
+	</th>
+	<th>
+		play Track
 	</th>
 	</tr>
 		<tr th:each="row : ${tracks}"> 
@@ -68,7 +74,9 @@
 	    		<option value="4">4</option>
 	    		<option value="5">5</option>
 	    	</select>
-	    	</td>  
+	    	</td>
+	    	<input type="hidden" id="trackid" th:value="${row.value[2]}"/>
+	    	<td><input type="submit" value="Play" class="trackPlayed"/></td>  
 		</tr>
 	 </table>
 </body>
