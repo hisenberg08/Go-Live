@@ -103,4 +103,13 @@ public class RestfulController {
 		return userRepo.unfollowUser(userName, toUnFollowUser);
 	}
 
+	@RequestMapping("/insertPlayData")
+	public int insertPlaysData(HttpServletRequest request){
+		String source = request.getParameter("source");
+		String user = request.getParameter("user");
+		String trackId = request.getParameter("trackId");
+		
+	return userRepo.userPlayTrack(source,user,trackId);
+	}
+	
 }

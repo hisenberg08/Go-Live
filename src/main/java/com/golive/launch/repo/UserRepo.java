@@ -49,7 +49,7 @@ public class UserRepo {
 
 	public Map<Integer, List<String>> getUserHistory(String username) {
 		
-		String lastFivePlayedTracks = "select t.tracktitle,p.playeddtv from plays p left join track t on t.trackid =p.trackid where p.username = ? limit 10";
+		String lastFivePlayedTracks = "select t.tracktitle,p.playeddtv,t.trackid from plays p left join track t on t.trackid =p.trackid where p.username = ? limit 10";
 		
 		List<Map<String, Object>> lastPlayedTracksresult = jdbctempplate.queryForList(lastFivePlayedTracks,username);
 		Map<Integer, List<String>> historyMap = new HashMap<>();
@@ -59,9 +59,17 @@ public class UserRepo {
 			List<String> histList = new ArrayList<>();
 			histList.add(result.get("tracktitle").toString());
 			histList.add(result.get("playeddtv").toString());
+			histList.add(result.get("trackid").toString());
 			historyMap.put(i,histList);
 			i++;
 		}
 		return historyMap;
+	}
+
+	public int userPlayTrack(String source, String user, String trackId) {
+		
+		String songPlayedQuery = "insert into plays (username,trackid,source,playeddtv) values (?,?,?,now())";
+		int status = jdbctempplate.update(songPlayedQuery,user,trackId,source);
+		return status;
 	}
 }
