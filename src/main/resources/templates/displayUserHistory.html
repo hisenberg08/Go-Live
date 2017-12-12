@@ -48,6 +48,7 @@
 	    	<td class="tg bg" th:text="${row.value[0]}"></td>  
 	    	<td class="tg bg" th:text="${row.value[1]}" th:value="${row.value[1]}"></td>
 	    	<input type="hidden" id="trackid" th:value="${row.value[2]}"/>
+	    	<input type="hidden" id="tracktitle" th:value="${row.value[0]}"/>
 	    	<td><input type="submit" value="Play" class="trackPlayed"/></td>
 		</tr>
 	 </table>

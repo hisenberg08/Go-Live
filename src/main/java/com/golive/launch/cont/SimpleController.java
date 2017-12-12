@@ -77,6 +77,24 @@ public class SimpleController {
 			return "login";
 	}
 
+	@RequestMapping("/verifyForDeleteUser")
+	public String verifyForDeleteUser(HttpServletRequest request, HttpServletResponse response,
+			Map<String, Object> model) {
+		String userName = request.getParameter("userName");
+		String loggedInUserName = request.getParameter("hidden");
+		String password = request.getParameter("password");
+		if (userName.equals(loggedInUserName)) {
+			boolean authentication = userLogin.validateUser(userName, password);
+			if (authentication) {
+				userRepo.deleteAccount(userName);
+				activeUsers.remove(userName);
+				return "login";
+			} else
+				return "error";
+		} else
+			return "error";
+	}
+
 	@RequestMapping("/saveUserInfo")
 	public String saveUserInfo(HttpServletRequest request, HttpServletResponse response) {
 
@@ -97,7 +115,7 @@ public class SimpleController {
 		if (updateStatus == 1)
 			return "login";
 		else
-			return "errorPage";
+			return "error";
 	}
 
 	@RequestMapping("/signup")
@@ -113,7 +131,7 @@ public class SimpleController {
 			model.put("user", userName);
 			return "playlist";
 		} else {
-			return "errorPage";
+			return "error";
 		}
 	}
 
@@ -152,7 +170,7 @@ public class SimpleController {
 			model.put("user", userName);
 			return "search";
 		} else {
-			return "errorPage";
+			return "error";
 		}
 	}
 
@@ -164,7 +182,7 @@ public class SimpleController {
 			model.put("news", dashRepo.getNewsFeed());
 			return "welcome";
 		} else
-			return "errorPage";
+			return "error";
 	}
 
 	@RequestMapping("/logout")
@@ -174,7 +192,27 @@ public class SimpleController {
 			activeUsers.remove(userName);
 			return "login";
 		} else
-			return "errorPage";
+			return "error";
+	}
+
+	@RequestMapping("/errorToLoginPage")
+	public String errorlogin(HttpServletRequest request) {
+		String userName = request.getParameter("hidden");
+		if (activeUsers.contains(userName)) {
+			activeUsers.remove(userName);
+			return "login";
+		} else
+			return "login";
+	}
+
+	@RequestMapping("/deleteAccount")
+	public String deleteAccount(HttpServletRequest request, Map<String, Object> model) {
+		String userName = request.getParameter("hidden");
+		if (activeUsers.contains(userName)) {
+			model.put("user", userName);
+			return "deleteAccount";
+		} else
+			return "error";
 	}
 
 	@RequestMapping("/createnew")
@@ -191,9 +229,9 @@ public class SimpleController {
 			if (status == 1)
 				return "welcome";
 			else
-				return "errorPage";
+				return "error";
 		} else
-			return "errorPage";
+			return "error";
 	}
 
 	@RequestMapping("/getTracks")
@@ -243,9 +281,9 @@ public class SimpleController {
 				return "displayAlbumTracks";
 			}
 
-			return "errorPage";
+			return "error";
 		} else
-			return "errorPage";
+			return "error";
 	}
 
 	@RequestMapping("/tracksForMood")
@@ -261,7 +299,7 @@ public class SimpleController {
 			model.put("user", username);
 			return "displayMoodTracks";
 		} else
-			return "errorPage";
+			return "error";
 	}
 
 	@RequestMapping("/userHistory")
@@ -275,6 +313,6 @@ public class SimpleController {
 
 			return "displayUserHistory";
 		} else
-			return "errorPage";
+			return "error";
 	}
 }

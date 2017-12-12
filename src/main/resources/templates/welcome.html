@@ -103,7 +103,7 @@ window.onload=initializemarquee
 	    	<table style="width:100%" height="100%" border="0">
 	    		<tr><th>
     				<form action="/playlist" method="get">               
-						<input class="dashbtn" type="submit" value="My Playlist"/>
+						<input class="dashbtn" type="submit" value="Playlists"/>
 						<input type="hidden" name="hidden" th:value="${user}"/>
 					</form>
     			</th></tr>
@@ -114,13 +114,13 @@ window.onload=initializemarquee
 					</form>
     			</th></tr>
     			<tr><th>
-					What's ur mood ?
+					<h2 style="color:azure">How are you today ?</h2>
 					
 					<form action="/tracksForMood" method="post">
 					<input type="hidden" name="username" th:value="${user}"/>
 					<select name="selectMood" id="selectMood" class="selectMood" style = "width: 30%">
 	    				<th:block th:each="row : ${news['mood']}">
-	    				<option th:value="${row}" th:text ="${row}"></option>
+	    					<option th:value="${row}" th:text ="${row}"></option>
 	    				</th:block>
 					</select>
 					<input type="submit"/>
@@ -135,31 +135,31 @@ window.onload=initializemarquee
 				<div class = "news">
 				<u><p>Most liked artists</p></u>
 				<ul th:each="row : ${news['topArtist']}">
-				  <li th:text="${row}" style = "text-align : left"></li>
+				  <li th:text="${row}" style = "text-align : center"></li>
 				</ul><hr/>
 				<u><p>Latest Tracks</p></u>
 				<ul th:each="row : ${news['latestTrack']}">
-				  <li th:text="${row}" style = "text-align : left"></li>
+				  <li th:text="${row}" style = "text-align : center"></li>
 				</ul><hr/>
 				<u><p>Latest Albums</p></u>
 				<ul th:each="row : ${news['latestAlbum']}">
-				  <li th:text="${row}" style = "text-align : left"></li>
+				  <li th:text="${row}" style = "text-align : center"></li>
 				</ul><hr/>
 				<u><p>Highest Rated Tracks</p></u>
 				<ul th:each="row : ${news['tracktitle']}">
-				  <li th:text="${row}" style = "text-align : left"></li>
+				  <li th:text="${row}" style = "text-align : center"></li>
 				</ul><hr/>
 				<u><p>Most Viewed PlayList</p></u>
 				<ul th:each="row : ${news['mostHeardPlaylists']}">
-				  <li th:text="${row}" style = "text-align : left"></li>
+				  <li th:text="${row}" style = "text-align : center"></li>
 				</ul><hr/>
 				<u><p>Most Played PlayList</p></u>
 				<ul th:each="row : ${news['mostPlayedPlaylist']}">
-				  <li th:text="${row}" style = "text-align : left"></li>
+				  <li th:text="${row}" style = "text-align : center"></li>
 				</ul><hr/>
 				<u><p>Most Viewed Album</p></u>
 				<ul th:each="row : ${news['mostHeardAlbum']}">
-				  <li th:text="${row}" style = "text-align : left"></li>
+				  <li th:text="${row}" style = "text-align : center"></li>
 				</ul>
 			</div>
 			</div>
@@ -167,6 +167,12 @@ window.onload=initializemarquee
 		</th>
 	  </tr>
 	</table></div>
+</div>
+<div class="deleteAccount" align="right">
+	<form action="/deleteAccount" method="post">               
+		<input class="dashbtn" type="submit" value="Delete My Account"/>
+		<input type="hidden" name="hidden" th:value="${user}"/>
+	</form>
 </div>
 </body>
 </html>

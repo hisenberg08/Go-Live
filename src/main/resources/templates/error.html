@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Error Page</title>
+<link th:href="@{/css/background.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="header">
+<!-- 	<div class="headertext"><h1>Go Live!!</h1></div> -->
+<div class="headertext">
+<img src="images/logo.jpg" alt="logo" /></div>
+	<div class="homeDiv">
+	<form action="/errorToLoginPage" method="post">               
+		<input class="headerbutton" type="submit" value="Login"/>
+		<input type="hidden" id="hidden" name="hidden" th:value="${user}"/>
+		<input type="hidden" id="user" name="hidden" th:value="${user}"/>
+	</form></div>
+</div>
+<p>Sorry there was some error. Please try logging in again</p>
+</body>
+</html>

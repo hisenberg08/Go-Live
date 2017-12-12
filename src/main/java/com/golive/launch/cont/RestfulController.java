@@ -104,13 +104,12 @@ public class RestfulController {
 	}
 
 	@RequestMapping("/insertPlayData")
-	public int insertPlaysData(HttpServletRequest request){
+	public String insertPlaysData(HttpServletRequest request) {
 		String source = request.getParameter("source");
 		String user = request.getParameter("user");
 		String trackId = request.getParameter("trackId");
 		String playlistId = request.getParameter("playlistId");
-		
-	return userRepo.userPlayTrack(source,user,trackId,playlistId);
+		return userRepo.userPlayTrack(source, user, trackId, playlistId);
 	}
-	
+
 }
